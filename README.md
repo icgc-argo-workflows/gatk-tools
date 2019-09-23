@@ -1,7 +1,7 @@
 [![Build Status](https://travis-ci.org/icgc-argo/gatk-tools.svg?branch=master)](https://travis-ci.org/icgc-argo/gatk-tools)
 # Dockerized GATK Tools
 
-This repository keeps a collect of GATK tools. All tools are defined using Common Workflow Language (CWL).
+This repository keeps a collect of GATK tools. All tools are dockerized and wrapped using Common Workflow Language (CWL).
 
 Every tool is self-sufficient, can be independently developed, tested, released and used. This clean isolation allows maximum flexibility, maintainability and portability.
 
