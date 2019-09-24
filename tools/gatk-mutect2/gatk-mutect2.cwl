@@ -13,7 +13,7 @@ inputs:
   jvm_mem:
     type: int?
     inputBinding:
-      prefix: -m
+      prefix: -j
   ref_fa:
     type: File
     inputBinding:
@@ -28,6 +28,10 @@ inputs:
     inputBinding:
       prefix: --normal-reads
     secondaryFiles: ['.bai?', '.crai?']
+  output_vcf:
+    type: string
+    inputBinding:
+      prefix: -O
   germline_resource:
     type: File?
     inputBinding:
@@ -42,12 +46,8 @@ inputs:
     type: File?
     inputBinding:
       prefix: -L
-  output_vcf:
-    type: string
-    inputBinding:
-      prefix: -O
   bam_output:
-    type: string
+    type: string?
     inputBinding:
       prefix: --bam-output
   f1r2_tar_gz:
@@ -63,13 +63,13 @@ outputs:
   unfiltered_vcf:
     type: File
     outputBinding:
-      glob: $(inputs.output_vcf).vcf.gz
+      glob: $(inputs.output_vcf)
     secondaryFiles: [.tbi]
   bam_output:
-    type: [null, File]
+    type: ['null', File]
     outputBinding:
       glob: $(inputs.bam_output)
   f1r2_counts:
-    type: [null, File]
+    type: ['null', File]
     outputBinding:
       glob: $(inputs.f1r2_tar_gz)

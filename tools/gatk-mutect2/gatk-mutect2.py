@@ -46,7 +46,7 @@ def main():
     if args.normal_reads:
         p = subprocess.run(['gatk GetSampleName -R %s -I %s -O normal_name.txt -encode && cat normal_name.txt' % \
                             (args.ref_fa, args.normal_reads)],
-                            capture_output=True, shell=True)
+                            stdout=subprocess.STDOUT, stderr=subprocess.STDERR, shell=True)
 
         if p.returncode == 0:
             normal_sample_name = p.stdout.decode('ascii').rstrip()
