@@ -18,6 +18,7 @@ inputs:
     type: File
     inputBinding:
       prefix: -R
+    secondaryFiles: '.fai'
   tumour_reads:
     type: File
     inputBinding:

@@ -46,7 +46,7 @@ def main():
     if args.normal_reads:
         p = subprocess.run(['gatk GetSampleName -R %s -I %s -O normal_name.txt -encode && cat normal_name.txt' % \
                             (args.ref_fa, args.normal_reads)],
-                            stdout=subprocess.STDOUT, stderr=subprocess.STDERR, shell=True)
+                            stdout=subprocess.PIPE, stderr=subprocess.PIPE, shell=True)
 
         if p.returncode == 0:
             normal_sample_name = p.stdout.decode('ascii').rstrip()
@@ -64,25 +64,22 @@ def main():
     if args.f1r2_tar_gz:
         cmd = cmd + ' --f1r2-tar-gz %s' % args.f1r2_tar_gz
 
-    stdout, stderr, p, success = '', '', None, True
+    p, success = None, True
     try:
-        p = subprocess.Popen([cmd],
+        p = subprocess.run([cmd],
                              stdout=subprocess.PIPE,
                              stderr=subprocess.PIPE,
                              shell=True)
-        stdout, stderr = p.communicate()
+
+        print(p.stdout.decode("utf-8"))
+        print(p.stderr.decode("utf-8"), file=sys.stderr)
 
     except Exception as e:
         print('Execution failed: %s' % e, file=sys.stderr)
         success = False
 
     if p and p.returncode != 0:
-        print('Execution failed, none zero code returned. Error: %s' % stderr.decode("utf-8"),
-            file=sys.stderr)
         success = False
-
-    print(stdout.decode("utf-8"))
-    print(stderr.decode("utf-8"), file=sys.stderr)
 
     if not success:
         sys.exit(p.returncode if p.returncode else 1)
