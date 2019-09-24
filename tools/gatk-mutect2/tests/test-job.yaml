@@ -1,0 +1,10 @@
+tumour_reads:
+  class: File
+  path: data/grch38-aligned.D0RH0_2.lane.bam
+normal_reads:
+  class: File
+  path: data/grch38-aligned.C0HVY_2.lane.bam
+ref_fa:
+  class: File
+  path: reference/tiny-grch38-chr11-530001-537000.fa
+output_vcf: HC1111.mutect2.vcf.gz
