@@ -48,10 +48,10 @@ def main():
                             stdout=subprocess.PIPE, stderr=subprocess.PIPE, shell=True)
 
         if p.returncode == 0:
+            normal_sample_name = p.stdout.decode('ascii').rstrip()
             if normal_sample_name.count('\n'):
                 sys.exit('Normal reads file has more than one SM value in the header, only one SM is allowed.')
             else:
-                normal_sample_name = p.stdout.decode('ascii').rstrip()
                 normal_cmd = ' -I %s -normal %s' % (args.normal_reads, normal_sample_name.replace('SM:', '', 1))
                 cmd = cmd + normal_cmd
         else:
