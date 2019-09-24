@@ -30,27 +30,39 @@ def main():
 
     args = parser.parse_args()
 
-    # TODO: valid arguments, output_vcf must end with 'vcf.gz', bam_output must end with '.bam'
-    # f1r2_tar_gz must end with '.tar.gz'
+    if not args.output_vcf.endswith('.vcf.gz'):
+        sys.exit('Usage: output VCF file name must end with ".vcf.gz"')
 
-    # TODO: get normal sample name, use it as -normal when invoke Mutect2
-    normal_cmd = ''
-    if normal_reads:
-        normal_sample_name = 'test-normal'
-        normal_cmd = '-I %s -normal %s' % (normal_reads, normal_sample_name)
+    if args.bam_output and not args.bam_output.endswith('.bam'):
+        sys.exit('Usage: BAM output file name must end with ".bam"')
 
-    cmd = 'gatk --java-options "-Xmx%sm" Mutect2 -R %s -O %s -I %s %s' % (
-            jvm_mem, ref_fa, output_vcf, tumour_reads, normal_cmd
+    if args.f1r2_tar_gz and not args.f1r2_tar_gz.endswith('.tar.gz'):
+        sys.exit('Usage: f1r2_tar_gz output file name must end with ".tar.gz"')
+
+    cmd = 'gatk --java-options "-Xmx%sm" Mutect2 -R %s -O %s -I %s' % (
+            args.jvm_mem, args.ref_fa, args.output_vcf, args.tumour_reads
         )
 
-    if intervals:
-        cmd = cmd + ' -L %s' % intervals
+    if args.normal_reads:
+        p = subprocess.run(['gatk GetSampleName -R %s -I %s -O normal_name.txt -encode && cat normal_name.txt' % \
+                            (args.ref_fa, args.normal_reads)],
+                            capture_output=True, shell=True)
 
-    if bam_output:
-        cmd = cmd + ' --bam-output %s' % bam_output
+        if p.returncode == 0:
+            normal_sample_name = p.stdout.decode('ascii').rstrip()
+            normal_cmd = ' -I %s -normal %s' % (args.normal_reads, normal_sample_name)
+            cmd = cmd + normal_cmd
+        else:
+            sys.exit('Unable to get "SM" from normal reads file. Error: %s' % p.stderr)
 
-    if f1r2_tar_gz:
-        cmd = cmd + ' --f1r2-tar-gz %s' % f1r2_tar_gz
+    if args.intervals:
+        cmd = cmd + ' -L %s' % args.intervals
+
+    if args.bam_output:
+        cmd = cmd + ' --bam-output %s' % args.bam_output
+
+    if args.f1r2_tar_gz:
+        cmd = cmd + ' --f1r2-tar-gz %s' % args.f1r2_tar_gz
 
     stdout, stderr, p, success = '', '', None, True
     try:
@@ -74,6 +86,7 @@ def main():
 
     if not success:
         sys.exit(p.returncode if p.returncode else 1)
+
 
 if __name__ == "__main__":
     main()
