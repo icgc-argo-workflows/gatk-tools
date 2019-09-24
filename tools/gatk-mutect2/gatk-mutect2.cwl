@@ -18,7 +18,7 @@ inputs:
     type: File
     inputBinding:
       prefix: -R
-    secondaryFiles: '.fai'
+    secondaryFiles: ['.fai', '^.dict']
   tumour_reads:
     type: File
     inputBinding:

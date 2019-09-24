@@ -44,14 +44,16 @@ def main():
         )
 
     if args.normal_reads:
-        p = subprocess.run(['gatk GetSampleName -R %s -I %s -O normal_name.txt -encode && cat normal_name.txt' % \
-                            (args.ref_fa, args.normal_reads)],
+        p = subprocess.run(['samtools view -H %s | grep "^@RG" | tr \'\t\' \'\n\' | grep "^SM" | sort -u' % args.normal_reads],
                             stdout=subprocess.PIPE, stderr=subprocess.PIPE, shell=True)
 
         if p.returncode == 0:
-            normal_sample_name = p.stdout.decode('ascii').rstrip()
-            normal_cmd = ' -I %s -normal %s' % (args.normal_reads, normal_sample_name)
-            cmd = cmd + normal_cmd
+            if normal_sample_name.count('\n'):
+                sys.exit('Normal reads file has more than one SM value in the header, only one SM is allowed.')
+            else:
+                normal_sample_name = p.stdout.decode('ascii').rstrip()
+                normal_cmd = ' -I %s -normal %s' % (args.normal_reads, normal_sample_name.replace('SM:', '', 1))
+                cmd = cmd + normal_cmd
         else:
             sys.exit('Unable to get "SM" from normal reads file. Error: %s' % p.stderr)
 
