@@ -8,3 +8,4 @@ ref_fa:
   class: File
   path: reference/tiny-grch38-chr11-530001-537000.fa
 output_vcf: HC1111.mutect2.vcf.gz
+bam_output: bamout.bam
