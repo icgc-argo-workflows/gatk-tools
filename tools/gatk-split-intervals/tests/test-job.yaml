@@ -1,0 +1,7 @@
+scatter_count: 2
+ref_fa:
+    class: File
+    path: reference/tiny-grch38-chr11-530001-537000.fa
+#intervals:  # type "File" (optional)
+#    class: File
+#    path: a/file/path
