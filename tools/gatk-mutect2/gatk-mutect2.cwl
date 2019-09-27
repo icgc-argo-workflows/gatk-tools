@@ -5,7 +5,7 @@ id: gatk-mutect2
 requirements:
 - class: ShellCommandRequirement
 - class: DockerRequirement
-  dockerPull: 'quay.io/icgc-argo/gatk-mutect2:gatk-mutect2.4.1.3.0-1'
+  dockerPull: 'quay.io/icgc-argo/gatk-mutect2:gatk-mutect2.4.1.3.0-1.1'
 
 baseCommand: [ 'gatk-mutect2.py' ]
 
