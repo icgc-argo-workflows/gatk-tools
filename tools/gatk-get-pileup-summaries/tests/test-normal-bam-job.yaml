@@ -1,0 +1,14 @@
+jvm_mem: 500
+ref_fa:  # Reference fa file
+    class: File
+    path: reference/tiny-grch38-chr11-530001-537000.fa
+seq_file:  # BAM/SAM/CRAM
+    class: File
+    path: data/HCC1143_BL-mini-N/cfa409d0-3236-5f07-8634-a2c0de74c8f2.5.20190927.wgs.grch38.bam
+variants:  # variants_for_contamination
+    class: File
+    path: data/tiny-chr11-exac_common_3.hg38.vcf.gz
+intervals:  # file with intervals over which to operate
+    class: File
+    path: data/my-intervals.bed
+output_name: "pileups.table"
