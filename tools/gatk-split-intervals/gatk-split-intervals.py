@@ -27,7 +27,6 @@ def main():
     if args.intervals:
         cmd = cmd + ' -L %s' % args.intervals
 
-    p, success = None, True
     try:
         p = subprocess.run([cmd],
                              stdout=subprocess.PIPE,
@@ -35,17 +34,12 @@ def main():
                              shell=True)
 
         print(p.stdout.decode("utf-8"))
-        print(p.stderr.decode("utf-8"), file=sys.stderr)
+        if p.returncode != 0:
+            print('Error occurred: %s' % p.stderr.decode("utf-8"), file=sys.stderr)
+            sys.exit(p.returncode)
 
     except Exception as e:
-        print('Execution failed: %s' % e, file=sys.stderr)
-        success = False
-
-    if p and p.returncode != 0:
-        success = False
-
-    if not success:
-        sys.exit(p.returncode if p.returncode else 1)
+        sys.exit('Execution failed: %s' % e)
 
 
 if __name__ == "__main__":
