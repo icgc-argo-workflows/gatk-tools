@@ -4,4 +4,4 @@ ref_fa:
     path: reference/tiny-grch38-chr11-530001-537000.fa
 intervals:
     class: File
-    path: my-intervals.bed
+    path: data/my-intervals.bed
