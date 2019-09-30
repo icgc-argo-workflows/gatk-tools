@@ -5,7 +5,7 @@ id: gatk-filter-mutect-calls
 requirements:
 - class: ShellCommandRequirement
 - class: DockerRequirement
-  dockerPull: 'quay.io/icgc-argo/gatk-tools/gatk-filter-mutect-calls:gatk-filter-mutect-calls.4.1.3.0-1.0'
+  dockerPull: 'quay.io/icgc-argo/gatk-filter-mutect-calls:gatk-filter-mutect-calls.4.1.3.0-1.0'
 
 baseCommand: [ 'gatk-filter-mutect-calls.py' ]
 
