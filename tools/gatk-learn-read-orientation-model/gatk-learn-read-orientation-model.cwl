@@ -5,7 +5,7 @@ id: gatk-learn-read-orientation-model
 requirements:
 - class: ShellCommandRequirement
 - class: DockerRequirement
-  dockerPull: 'quay.io/icgc-argo/gatk-tools/gatk-learn-read-orientation-model:gatk-learn-read-orientation-model.4.1.3.0-1.0'
+  dockerPull: 'quay.io/icgc-argo/gatk-learn-read-orientation-model:gatk-learn-read-orientation-model.4.1.3.0-1.0'
 
 baseCommand: [ 'gatk-learn-read-orientation-model.py' ]
 
