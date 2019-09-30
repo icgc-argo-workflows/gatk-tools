@@ -15,7 +15,7 @@ inputs:
     inputBinding:
       prefix: -j
   ref_fa:
-    type: File
+    type: File?
     inputBinding:
       prefix: -R
     secondaryFiles: ['.fai', '^.dict']
