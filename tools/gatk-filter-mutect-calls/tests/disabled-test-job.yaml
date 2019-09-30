@@ -5,7 +5,7 @@ ref_fa:
 unfiltered_vcf:
     class: File
     path: data/HCC1143-mini-Mutect2-calls/HCC1143.mutect2.vcf.gz
-mutect_stats:  # type "File" (optional)
+mutect_stats:  # type "File", stats file produced by metect2
     class: File
     path: data/HCC1143-mini-Mutect2-calls/HCC1143.mutect2.vcf.gz.stats  # actual .stats file to be prepared
 #contamination_table:  # type "File" (optional)
