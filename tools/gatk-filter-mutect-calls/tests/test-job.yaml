@@ -18,4 +18,4 @@ mutect_stats:  # type "File", stats file produced by metect2
 #  - class: File
 #    path: a/file/path
 filtering_stats_output: filtering.stats.txt
-output_vcf: filter.vcf.gz
+output_vcf: filtered.vcf.gz

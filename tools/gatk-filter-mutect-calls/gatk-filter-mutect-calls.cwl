@@ -58,4 +58,4 @@ outputs:
   filtering_stats:
     type: File
     outputBinding:
-      glob: $(inputs.filtering_stats)
+      glob: $(inputs.filtering_stats_output)
