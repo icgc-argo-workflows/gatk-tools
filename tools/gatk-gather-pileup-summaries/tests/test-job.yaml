@@ -1,0 +1,7 @@
+ref_dict:
+  class: File
+  path: reference/tiny-grch38-chr11-530001-537000.dict
+input_pileup:  # array of type "File"
+  - class: File
+    path: data/HCC1143-mini-T/pileups.table
+output_name: merged.pipeups.tsv  # output file name, must ends with .vcf.gz
