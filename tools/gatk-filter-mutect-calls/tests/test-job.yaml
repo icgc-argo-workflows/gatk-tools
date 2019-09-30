@@ -1,0 +1,21 @@
+jvm_mem: 1000
+ref_fa:
+    class: File
+    path: reference/tiny-grch38-chr11-530001-537000.fa
+unfiltered_vcf:
+    class: File
+    path: data/HCC1143-mini-Mutect2-calls/HCC1143.mutect2.vcf.gz
+mutect_stats:  # type "File", stats file produced by metect2
+    class: File
+    path: data/HCC1143-mini-Mutect2-calls/HCC1143.mutect2.vcf.gz.stats  # actual .stats file to be prepared
+#contamination_table:  # type "File" (optional)
+#    class: File
+#    path: a/file/path
+#segmentation_table:  # type "File" (optional)
+#    class: File
+#    path: a/file/path
+#artifact_priors_tar_gz:  # array of type "File" (optional)
+#  - class: File
+#    path: a/file/path
+filtering_stats_output: filtering.stats.txt
+output_vcf: filtered.vcf.gz
