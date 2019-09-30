@@ -1,0 +1,9 @@
+jvm_mem: 1000
+tumour_pileups:
+  class: File
+  path: data/HCC1143-mini-T/pileups.table
+normal_pileups:
+  class: File
+  path: data/HCC1143_BL-mini-N/pileups.table
+segmentation_output: segments.table
+contamination_output: contamination.table
