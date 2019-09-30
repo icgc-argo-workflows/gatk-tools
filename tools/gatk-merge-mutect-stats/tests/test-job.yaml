@@ -1,0 +1,6 @@
+input_stats:  # array of type "File"
+  - class: File  # test to be prepared
+    path: data/HCC1143-mini-Mutect2-calls/HCC1143.mutect2.vcf.gz.stats
+  - class: File  # test to be prepared
+    path: data/HCC1143-mini-Mutect2-calls/HCC1143.mutect2.copy.vcf.gz.stats
+output_name: merged.stats  # output file name, must ends with .stats
