@@ -5,7 +5,7 @@ id: gatk-filter-alignment-artifacts
 requirements:
 - class: ShellCommandRequirement
 - class: DockerRequirement
-  dockerPull: 'quay.io/icgc-argo/gatk-tools/gatk-filter-alignment-artifacts:gatk-filter-alignment-artifacts.4.1.3.0-1.0'
+  dockerPull: 'quay.io/icgc-argo/gatk-filter-alignment-artifacts:gatk-filter-alignment-artifacts.4.1.3.0-1.0'
 
 baseCommand: [ 'gatk-filter-alignment-artifacts.py' ]
 
