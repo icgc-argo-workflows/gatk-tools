@@ -1,0 +1,6 @@
+input_vcf:  # array of type "File"
+  - class: File
+    path: data/HCC1143-mini-Mutect2-calls/HCC1143.mutect2.vcf.gz
+  - class: File
+    path: data/HCC1143-mini-Mutect2-calls/HCC1143.mutect2.copy.vcf.gz
+output_name: merged.vcf.gz  # output file name, must ends with .vcf.gz
