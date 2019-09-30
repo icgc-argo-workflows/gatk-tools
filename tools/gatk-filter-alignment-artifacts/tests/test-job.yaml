@@ -1,0 +1,11 @@
+jvm_mem: 1000
+bwa_mem_index_image:
+  class: File
+  path: reference/tiny-grch38-chr11-530001-537000.fa.img
+tumour_seq:
+  class: File
+  path: data/HCC1143-mini-T/8f879c15-14da-593d-bb76-db866f81ab3a.6.20190927.wgs.grch38.bam
+input_vcf:
+  class: File
+  path: data/HCC1143-mini-Mutect2-calls/HCC1143.mutect2.vcf.gz
+output_vcf: filtered.vcf.gz
