@@ -66,6 +66,10 @@ outputs:
     outputBinding:
       glob: $(inputs.output_vcf)
     secondaryFiles: [.tbi]
+  mutect_stats:
+    type: File
+    outputBinding:
+      glob: $(inputs.output_vcf).stats
   bam_output:
     type: ['null', File]
     outputBinding:
