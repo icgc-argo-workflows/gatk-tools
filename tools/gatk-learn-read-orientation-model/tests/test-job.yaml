@@ -1,0 +1,4 @@
+input_f1r2_tar_gz:  # array of type "File"
+  - class: File
+    path: data/HCC1143-mini-T/HCC1143.f1r2.tar.gz
+output_name: artifact-priors.tar.gz  # output file name, must ends with .tar.gz
