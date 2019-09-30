@@ -5,7 +5,7 @@ id: gatk-calculate-contamination
 requirements:
 - class: ShellCommandRequirement
 - class: DockerRequirement
-  dockerPull: 'quay.io/icgc-argo/gatk-tools/gatk-calculate-contamination:gatk-calculate-contamination.4.1.3.0-1.0'
+  dockerPull: 'quay.io/icgc-argo/gatk-calculate-contamination:gatk-calculate-contamination.4.1.3.0-1.0'
 
 baseCommand: [ 'gatk-calculate-contamination.py' ]
 
