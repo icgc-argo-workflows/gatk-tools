@@ -45,7 +45,7 @@ inputs:
     inputBinding:
       prefix: --stats
   filtering_stats_output:  # output file name for filtering stats
-    type: string
+    type: string?
     inputBinding:
       prefix: --filtering-stats
 
