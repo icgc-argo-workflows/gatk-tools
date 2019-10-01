@@ -30,6 +30,10 @@ def main():
 
     args = parser.parse_args()
 
+    output_prefix = ''
+    if args.intervals:
+        output_prefix = os.path.basename(args.intervals).split('.')[0] + '.'
+
     if not args.output_vcf.endswith('.vcf.gz'):
         sys.exit('Usage: output VCF file name must end with ".vcf.gz"')
 
@@ -39,8 +43,8 @@ def main():
     if args.f1r2_tar_gz and not args.f1r2_tar_gz.endswith('.tar.gz'):
         sys.exit('Usage: f1r2_tar_gz output file name must end with ".tar.gz"')
 
-    cmd = 'gatk --java-options "-Xmx%sm" Mutect2 -R %s -O %s -I %s' % (
-            args.jvm_mem, args.ref_fa, args.output_vcf, args.tumour_reads
+    cmd = 'gatk --java-options "-Xmx%sm" Mutect2 -R %s -O %s%s -I %s' % (
+            args.jvm_mem, args.ref_fa, output_prefix, args.output_vcf, args.tumour_reads
         )
 
     if args.normal_reads:
@@ -61,10 +65,10 @@ def main():
         cmd = cmd + ' -L %s' % args.intervals
 
     if args.bam_output:
-        cmd = cmd + ' --bam-output %s' % args.bam_output
+        cmd = cmd + ' --bam-output %s%s' % (output_prefix, args.bam_output)
 
     if args.f1r2_tar_gz:
-        cmd = cmd + ' --f1r2-tar-gz %s' % args.f1r2_tar_gz
+        cmd = cmd + ' --f1r2-tar-gz %s%s' % (output_prefix, args.f1r2_tar_gz)
 
     p, success = None, True
     try:
