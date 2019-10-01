@@ -14,5 +14,8 @@ mutect_stats:  # type "File", stats file produced by metect2
 #segmentation_table:  # type "File" (optional)
 #    class: File
 #    path: a/file/path
+artifact_priors_tar_gz:  # array of type "File" (optional)
+  - class: File
+    path: data/HCC1143-mini-T/HCC1143.artifact-priors.tar.gz
 filtering_stats_output: filtering.stats.txt
 output_vcf: filtered.vcf.gz
