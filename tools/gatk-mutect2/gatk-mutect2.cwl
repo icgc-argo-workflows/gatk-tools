@@ -74,6 +74,7 @@ outputs:
     type: ['null', File]
     outputBinding:
       glob: "*$(inputs.bam_output)"
+    secondaryFiles: [.bai]
   f1r2_counts:
     type: ['null', File]
     outputBinding:
