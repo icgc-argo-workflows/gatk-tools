@@ -8,5 +8,5 @@ ref_fa:
   class: File
   path: reference/tiny-grch38-chr11-530001-537000.fa
 output_vcf: HCC1143.mutect2.vcf.gz
-bam_output: HCC1143.bamout.bam
+bam_output_name: HCC1143.bamout.bam
 f1r2_tar_gz: HCC1143.f1r2.tar.gz

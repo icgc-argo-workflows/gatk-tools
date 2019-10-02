@@ -47,7 +47,7 @@ inputs:
     type: File?
     inputBinding:
       prefix: -L
-  bam_output:
+  bam_output_name:
     type: string?
     inputBinding:
       prefix: --bam-output
@@ -73,7 +73,7 @@ outputs:
   bam_output:
     type: ['null', File]
     outputBinding:
-      glob: "*$(inputs.bam_output)"
+      glob: "*$(inputs.bam_output_name)"
     secondaryFiles: [.bai]
   f1r2_counts:
     type: ['null', File]
