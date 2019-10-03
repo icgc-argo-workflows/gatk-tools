@@ -39,7 +39,8 @@ def main():
     if args.segmentation_table:
         cmd = cmd + ' --tumor-segmentation %s' % args.segmentation_table
     if args.artifact_priors_tar_gz:
-        cmd = cmd + ' --ob-priors %s' % args.artifact_priors_tar_gz
+        for p in args.artifact_priors_tar_gz:
+            cmd = cmd + ' -ob-priors %s' % p
     if args.filtering_stats_output:
         cmd = cmd + ' --filtering-stats %s' % args.filtering_stats_output
 
