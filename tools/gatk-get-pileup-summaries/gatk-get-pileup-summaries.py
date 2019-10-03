@@ -24,8 +24,12 @@ def main():
 
     args = parser.parse_args()
 
-    cmd = 'gatk --java-options "-Xmx%sm" GetPileupSummaries -I %s -L %s -V %s -O %s --interval-set-rule INTERSECTION' % (
-            args.jvm_mem, args.input_seq, args.intervals, args.variants, args.output_name
+    output_prefix = ''
+    if args.intervals:
+        output_prefix = os.path.basename(args.intervals).split('.')[0] + '.'
+
+    cmd = 'gatk --java-options "-Xmx%sm" GetPileupSummaries -I %s -L %s -V %s -O %s%s --interval-set-rule INTERSECTION' % (
+            args.jvm_mem, args.input_seq, args.intervals, args.variants, output_prefix, args.output_name
         )
 
     if args.ref_fa:
