@@ -5,7 +5,7 @@ id: gatk-mutect2
 requirements:
 - class: ShellCommandRequirement
 - class: DockerRequirement
-  dockerPull: 'quay.io/icgc-argo/gatk-mutect2:gatk-mutect2.4.1.3.0-1.1'
+  dockerPull: 'quay.io/icgc-argo/gatk-mutect2:gatk-mutect2.4.1.3.0-1.3'
 
 baseCommand: [ 'gatk-mutect2.py' ]
 
@@ -47,7 +47,7 @@ inputs:
     type: File?
     inputBinding:
       prefix: -L
-  bam_output:
+  bam_output_name:
     type: string?
     inputBinding:
       prefix: --bam-output
@@ -64,17 +64,18 @@ outputs:
   unfiltered_vcf:
     type: File
     outputBinding:
-      glob: $(inputs.output_vcf)
+      glob: "*$(inputs.output_vcf)"
     secondaryFiles: [.tbi]
   mutect_stats:
     type: File
     outputBinding:
-      glob: $(inputs.output_vcf).stats
+      glob: "*$(inputs.output_vcf).stats"
   bam_output:
     type: ['null', File]
     outputBinding:
-      glob: $(inputs.bam_output)
+      glob: "*$(inputs.bam_output_name)"
+    secondaryFiles: [.bai]
   f1r2_counts:
     type: ['null', File]
     outputBinding:
-      glob: $(inputs.f1r2_tar_gz)
+      glob: "*$(inputs.f1r2_tar_gz)"

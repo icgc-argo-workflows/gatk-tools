@@ -1,3 +1,6 @@
+intervals:
+  class: File
+  path: data/0000-scattered.interval_list
 tumour_reads:
   class: File
   path: data/HCC1143-mini-T/8f879c15-14da-593d-bb76-db866f81ab3a.6.20190927.wgs.grch38.bam
