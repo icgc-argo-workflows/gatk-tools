@@ -5,7 +5,7 @@ id: gatk-merge-vcfs
 requirements:
 - class: ShellCommandRequirement
 - class: DockerRequirement
-  dockerPull: 'quay.io/icgc-argo/gatk-merge-vcfs:gatk-merge-vcfs.4.1.3.0-1.0'
+  dockerPull: 'quay.io/icgc-argo/gatk-merge-vcfs:gatk-merge-vcfs.4.1.3.0-1.1'
 
 baseCommand: [ 'gatk-merge-vcfs.py' ]
 
@@ -28,3 +28,4 @@ outputs:
     type: File
     outputBinding:
       glob: $(inputs.output_name)
+    secondaryFiles: '.tbi'
