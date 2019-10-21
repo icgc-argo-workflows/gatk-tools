@@ -38,3 +38,4 @@ outputs:
     type: File
     outputBinding:
       glob: $(inputs.output_vcf)
+    secondaryFiles: ['.tbi']
