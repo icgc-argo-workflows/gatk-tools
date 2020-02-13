@@ -10,13 +10,16 @@ def run_cmd(cmd):
         p = subprocess.run([cmd], stdout=subprocess.PIPE, stderr=subprocess.PIPE,
                              shell=True, check=True)
 
-        print(p.stdout.decode("utf-8"))
-        if p.returncode != 0:
-            print('Error occurred: %s' % p.stderr.decode("utf-8"), file=sys.stderr)
-            sys.exit(p.returncode)
+    except subprocess.CalledProcessError as e:   # this is triggered when cmd returned non-zero code
+        print(e.stdout.decode("utf-8"))
+        print('Execution returned non-zero code: %s. Additional error message: %s' % \
+                (e.returncode, e.stderr.decode("utf-8")), file=sys.stderr)
+        sys.exit(e.returncode)
 
-    except subprocess.CalledProcessError as e:
+    except Exception as e:  # all other errors go here, like unable to find the command
         sys.exit('Execution failed: %s' % e)
+
+    return p  # in case the caller of this funtion needs p.stdout, p.stderr etc
 
 
 def main():
@@ -27,7 +30,7 @@ def main():
     parser.add_argument('-s', dest='seq', type=str,
                         help='Input BAM/CRAM', required=True)
     parser.add_argument('-r', dest='reference', type=str,
-                        help='reference sequence file', required=True)
+                        help='Reference genome sequence fa file', required=True)
 
 
     args = parser.parse_args()
