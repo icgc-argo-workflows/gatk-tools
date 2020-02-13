@@ -27,7 +27,7 @@ version = '4.1.4.1-1.0'
 
 params.seq = ""
 params.container_version = ""
-params.ref_genome = ""
+params.ref_genome_fa = ""
 params.cpus = 1
 params.mem = 2  // in GB
 
@@ -45,7 +45,7 @@ process gatkCollectOxogMetrics {
 
   input:
     path seq
-    path ref_genome
+    path ref_genome_fa
     path ref_genome_secondary_file
 
 
@@ -55,7 +55,7 @@ process gatkCollectOxogMetrics {
   script:
     """
     gatk-collect-oxog-metrics.py -s ${seq} \
-                      -r ${ref_genome} \
+                      -r ${ref_genome_fa} \
                       -m ${(int) (params.mem * 1000)}
     """
 }

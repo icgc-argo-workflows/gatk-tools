@@ -25,20 +25,20 @@
 nextflow.preview.dsl=2
 
 params.seq = ""
-params.ref_genome = ""
+params.ref_genome_fa = ""
 
 
 include '../gatk-collect-oxog-metrics.nf' params(params)
 
 Channel
-  .fromPath(getOxogSecondaryFiles(params.ref_genome), checkIfExists: true)
+  .fromPath(getOxogSecondaryFiles(params.ref_genome_fa), checkIfExists: true)
   .set { ref_genome_ch }
 
 workflow {
   main:
     gatkCollectOxogMetrics(
       file(params.seq), \
-      file(params.ref_genome), \
+      file(params.ref_genome_fa), \
       ref_genome_ch.collect()
     )
 

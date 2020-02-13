@@ -15,7 +15,7 @@ def run_cmd(cmd):
             print('Error occurred: %s' % p.stderr.decode("utf-8"), file=sys.stderr)
             sys.exit(p.returncode)
 
-    except Exception as e:
+    except subprocess.CalledProcessError as e:
         sys.exit('Execution failed: %s' % e)
 
 
