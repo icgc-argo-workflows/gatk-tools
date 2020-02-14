@@ -4,6 +4,8 @@ import os
 import sys
 import subprocess
 import argparse
+import csv
+import re
 
 def run_cmd(cmd):
     try:
@@ -20,6 +22,30 @@ def run_cmd(cmd):
         sys.exit('Execution failed: %s' % e)
 
     return p  # in case the caller of this funtion needs p.stdout, p.stderr etc
+
+def get_oxoQ(oxog_metric):
+    num = 0
+    NTOT = 0
+    NALTOXO = 0
+    NALTNON = 0
+    oxoQ = float('NaN')
+    with open(oxog_metric, 'r') as fp:
+        oxoReader = csv.DictReader(filter(lambda row: not re.match(r'^#|\s*$', row), fp), delimiter='\t')
+
+        for line in oxoReader:
+            CTXT = line['CONTEXT']
+            if re.match('CCG', CTXT):
+                num = num + 1
+                NTOT = NTOT + int(line['TOTAL_BASES'])
+                NALTOXO = NALTOXO + int(line['ALT_OXO_BASES'])
+                NALTNON = NALTNON + int(line['ALT_NONOXO_BASES'])
+                oxoQ = float(line['OXIDATION_Q'])
+
+    if num > 1:
+        er = float(max(NALTOXO - NALTNON, 1.0001)) / float(NTOT)
+        oxoQ = -10.0 * log10(er)
+
+    return oxoQ
 
 
 def main():
@@ -52,7 +78,12 @@ def main():
 
     run_cmd(cmd)
 
-    cmd = 'tar czf %s.oxog_metrics.tgz *.oxog_metrics.txt' % args.seq
+    oxoQ_score = get_oxoQ(metrics_file)
+
+    with open("CCG.oxoQ_score.txt", 'w') as f:
+        f.write('%.4f' % oxoQ_score)
+
+    cmd = 'tar czf %s.oxog_metrics.tgz %s.oxog_metrics.txt CCG.oxoQ_score.txt' % (args.seq, args.seq)
     run_cmd(cmd)
 
 
