@@ -28,7 +28,8 @@ params.seq = ""
 params.ref_genome_fa = ""
 
 
-include '../gatk-collect-oxog-metrics.nf' params(params)
+include gatkCollectOxogMetrics from '../gatk-collect-oxog-metrics.nf' params(params)
+include getOxogSecondaryFiles from '../gatk-collect-oxog-metrics.nf' params(params)
 
 Channel
   .fromPath(getOxogSecondaryFiles(params.ref_genome_fa), checkIfExists: true)
