@@ -6,6 +6,7 @@ import subprocess
 import argparse
 import csv
 import re
+from math import log10
 
 def run_cmd(cmd):
     try:
