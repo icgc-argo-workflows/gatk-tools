@@ -82,7 +82,7 @@ def main():
 
     version_cmd = 'gatk CollectOxoGMetrics --version | grep GATK'
     p = run_cmd(version_cmd)
-    tool_ver = 'gatk@%s' % p.stdout.decode("utf-8").strip().split(' ')[-1]
+    tool_ver = 'gatk:CollectOxoGMetrics@%s' % p.stdout.decode("utf-8").strip().split(' ')[-1]
 
     oxoQ_score = get_oxoQ(metrics_file)
     with open("%s.extra_info.json" % args.seq, 'w') as f:
