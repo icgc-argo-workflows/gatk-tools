@@ -6,6 +6,7 @@ import subprocess
 import argparse
 import csv
 import re
+import json
 from math import log10
 
 def run_cmd(cmd):
@@ -79,12 +80,19 @@ def main():
 
     run_cmd(cmd)
 
+    version_cmd = 'gatk CollectOxoGMetrics --version | grep GATK'
+    p = run_cmd(version_cmd)
+    tool_ver = 'gatk:CollectOxoGMetrics@%s' % p.stdout.decode("utf-8").strip().split(' ')[-1]
+
     oxoQ_score = get_oxoQ(metrics_file)
+    with open("%s.extra_info.json" % args.seq, 'w') as f:
+        f.write(json.dumps({
+                "tool": tool_ver,
+                "oxoQ_score": float('%.4f' % oxoQ_score),
+                "context": "CCG"
+            }, indent=2))
 
-    with open("CCG.oxoQ_score.txt", 'w') as f:
-        f.write('%.4f' % oxoQ_score)
-
-    cmd = 'tar czf %s.oxog_metrics.tgz %s.oxog_metrics.txt CCG.oxoQ_score.txt' % (args.seq, args.seq)
+    cmd = 'tar czf %s.oxog_metrics.tgz %s.oxog_metrics.txt *.extra_info.json' % (args.seq, args.seq)
     run_cmd(cmd)
 
 
