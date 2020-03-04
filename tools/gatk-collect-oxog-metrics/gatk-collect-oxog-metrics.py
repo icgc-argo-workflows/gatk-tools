@@ -8,6 +8,7 @@ import csv
 import re
 import json
 from math import log10
+import uuid
 
 def run_cmd(cmd):
     try:
@@ -41,7 +42,7 @@ def get_oxoQ(oxog_metric):
                 NTOT = NTOT + int(line['TOTAL_BASES'])
                 NALTOXO = NALTOXO + int(line['ALT_OXO_BASES'])
                 NALTNON = NALTNON + int(line['ALT_NONOXO_BASES'])
-                oxoQ = float(line['OXIDATION_Q'])
+                oxoQ = float(line['OXIDATION_Q']) if '?' not in line['OXIDATION_Q'] else None
 
     if num > 1:
         er = float(max(NALTOXO - NALTNON, 1.0001)) / float(NTOT)
@@ -59,6 +60,8 @@ def main():
                         help='Input BAM/CRAM', required=True)
     parser.add_argument('-r', dest='reference', type=str,
                         help='Reference genome sequence fa file', required=True)
+    parser.add_argument('-i', dest='interval_file', type=str,
+                        help='Interval file, eg, bed file, to specify working interval')
 
 
     args = parser.parse_args()
@@ -67,12 +70,22 @@ def main():
     jvm_Xmx = "-Xmx%sm" % args.jvm_mem
     
     # detect the format of input file
+    interval_arg = ''
     if os.path.basename(args.seq).endswith(".bam"):
-        cmd = f'gatk --java-options {jvm_Xmx} CollectOxoGMetrics -I {args.seq} -O {metrics_file} -R {args.reference}'
+        if args.interval_file:
+            interval_arg = f'--INTERVALS {args.interval_file}'
+
+        cmd = f'gatk --java-options {jvm_Xmx} CollectOxoGMetrics -I {args.seq} -O {metrics_file} -R {args.reference} {interval_arg}'
 
     elif os.path.basename(args.seq).endswith(".cram"):
+        if args.interval_file:
+            fname = str(uuid.uuid4())
+            cmd = f"grep -v '^@' {args.interval_file} > {fname}.bed"
+            run_cmd(cmd)
+            interval_arg = f'-L {fname}.bed'
+
         cmd = (
-            f'samtools view -b -T {args.reference} {args.seq} -o /dev/stdout | '
+            f'samtools view -b {interval_arg} -T {args.reference} {args.seq} -o /dev/stdout | '
             f'gatk --java-options {jvm_Xmx} CollectOxoGMetrics -I /dev/stdin -O {metrics_file} -R {args.reference}')
 
     else:
@@ -88,7 +101,7 @@ def main():
     with open("%s.extra_info.json" % args.seq, 'w') as f:
         f.write(json.dumps({
                 "tool": tool_ver,
-                "oxoQ_score": float('%.4f' % oxoQ_score),
+                "oxoQ_score": float('%.4f' % oxoQ_score) if oxoQ_score is not None else None,
                 "context": "CCG"
             }, indent=2))
 

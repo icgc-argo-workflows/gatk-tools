@@ -23,9 +23,11 @@
  */
 
 nextflow.preview.dsl=2
-version = '4.1.4.1-1.3'
+version = '4.1.4.1-1.4'
 
 params.seq = ""
+params.seq_idx = ""
+params.interval_file = "NO_FILE"
 params.container_version = ""
 params.ref_genome_fa = ""
 params.cpus = 1
@@ -45,17 +47,20 @@ process gatkCollectOxogMetrics {
 
   input:
     path seq
+    path seq_idx
     path ref_genome_fa
     path ref_genome_secondary_file
+    path interval_file
 
 
   output:
     path "*.oxog_metrics.tgz", emit: oxog_metrics
 
   script:
+    arg_interval_file = interval_file.name == 'NO_FILE' ? "" : "-i ${interval_file}"
     """
     gatk-collect-oxog-metrics.py -s ${seq} \
                       -r ${ref_genome_fa} \
-                      -m ${(int) (params.mem * 1000)}
+                      -m ${(int) (params.mem * 1000)} ${arg_interval_file}
     """
 }
