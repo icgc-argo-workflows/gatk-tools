@@ -1,0 +1,5 @@
+{
+  "scatter_count": 3,
+  "ref_genome_fa": "reference/tiny-grch38-chr11-530001-537000.fa",
+  "intervals": "data/my-intervals.bed"
+}
