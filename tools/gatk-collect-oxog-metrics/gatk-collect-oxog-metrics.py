@@ -66,7 +66,7 @@ def main():
 
     args = parser.parse_args()
 
-    metrics_file = "%s.oxog_metrics.txt" % args.seq
+    metrics_file_prefix = args.seq
     jvm_Xmx = "-Xmx%sm" % args.jvm_mem
     
     # detect the format of input file
@@ -74,8 +74,9 @@ def main():
     if os.path.basename(args.seq).endswith(".bam"):
         if args.interval_file:
             interval_arg = f'--INTERVALS {args.interval_file}'
+            metrics_file_prefix = f"{args.interval_file.split('-')[0]}-{metrics_file_prefix}"
 
-        cmd = f'gatk --java-options {jvm_Xmx} CollectOxoGMetrics -I {args.seq} -O {metrics_file} -R {args.reference} {interval_arg}'
+        cmd = f'gatk --java-options {jvm_Xmx} CollectOxoGMetrics -I {args.seq} -O {metrics_file_prefix}.oxog_metrics.txt -R {args.reference} {interval_arg}'
 
     elif os.path.basename(args.seq).endswith(".cram"):
         if args.interval_file:
@@ -83,10 +84,11 @@ def main():
             cmd = f"grep -v '^@' {args.interval_file} > {fname}.bed"
             run_cmd(cmd)
             interval_arg = f'-L {fname}.bed'
+            metrics_file_prefix = f"{args.interval_file.split('-')[0]}-{metrics_file_prefix}"
 
         cmd = (
             f'samtools view -b {interval_arg} -T {args.reference} {args.seq} -o /dev/stdout | '
-            f'gatk --java-options {jvm_Xmx} CollectOxoGMetrics -I /dev/stdin -O {metrics_file} -R {args.reference}')
+            f'gatk --java-options {jvm_Xmx} CollectOxoGMetrics -I /dev/stdin -O {metrics_file_prefix}.oxog_metrics.txt -R {args.reference}')
 
     else:
         sys.exit("Unsupported input file format!")
@@ -97,15 +99,15 @@ def main():
     p = run_cmd(version_cmd)
     tool_ver = 'gatk:CollectOxoGMetrics@%s' % p.stdout.decode("utf-8").strip().split(' ')[-1]
 
-    oxoQ_score = get_oxoQ(metrics_file)
-    with open("%s.extra_info.json" % args.seq, 'w') as f:
+    oxoQ_score = get_oxoQ(f"{metrics_file_prefix}.oxog_metrics.txt")
+    with open("%s.extra_info.json" % metrics_file_prefix, 'w') as f:
         f.write(json.dumps({
                 "tool": tool_ver,
                 "oxoQ_score": float('%.4f' % oxoQ_score) if oxoQ_score is not None else None,
                 "context": "CCG"
             }, indent=2))
 
-    cmd = 'tar czf %s.oxog_metrics.tgz %s.oxog_metrics.txt *.extra_info.json' % (args.seq, args.seq)
+    cmd = f'tar czf {metrics_file_prefix}.oxog_metrics.tgz {metrics_file_prefix}.oxog_metrics.txt {metrics_file_prefix}.extra_info.json'
     run_cmd(cmd)
 
 

@@ -30,7 +30,8 @@ params.ref_genome_fa = ""
 params.interval_file = "NO_FILE"
 
 
-include { gatkCollectOxogMetrics; getOxogSecondaryFiles } from '../gatk-collect-oxog-metrics.nf' params(params)
+include { gatkCollectOxogMetrics; getOxogSecondaryFiles; gatherOxogMetrics } \
+  from '../gatk-collect-oxog-metrics.nf' params(params)
 
 Channel
   .fromPath(getOxogSecondaryFiles(params.ref_genome_fa), checkIfExists: true)
@@ -46,6 +47,7 @@ workflow {
       file(params.interval_file)
     )
 
-  publish:
-    gatkCollectOxogMetrics.out.oxog_metrics to: 'outdir', overwrite: true
+    gatherOxogMetrics(
+      gatkCollectOxogMetrics.out.oxog_metrics
+    )
 }

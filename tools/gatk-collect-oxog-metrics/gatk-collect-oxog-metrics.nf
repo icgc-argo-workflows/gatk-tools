@@ -64,3 +64,21 @@ process gatkCollectOxogMetrics {
                       -m ${(int) (params.mem * 1000)} ${arg_interval_file}
     """
 }
+
+
+process gatherOxogMetrics {
+  container "quay.io/icgc-argo/gatk-collect-oxog-metrics:gatk-collect-oxog-metrics.${params.container_version ?: version}"
+  cpus params.cpus
+  memory "${params.mem} GB"
+
+  input:
+    path oxog_metrics_files
+
+  output:
+    path "out/*.oxog_metrics.tgz", emit: oxog_metrics
+
+  script:
+    """
+    gather-oxog-metrics.py -m ${oxog_metrics_files}
+    """
+}
