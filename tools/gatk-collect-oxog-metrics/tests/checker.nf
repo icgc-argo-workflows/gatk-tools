@@ -25,11 +25,13 @@
 nextflow.preview.dsl=2
 
 params.seq = ""
+params.seq_idx = ""
 params.ref_genome_fa = ""
+params.interval_file = "NO_FILE"
 
 
-include gatkCollectOxogMetrics from '../gatk-collect-oxog-metrics.nf' params(params)
-include getOxogSecondaryFiles from '../gatk-collect-oxog-metrics.nf' params(params)
+include { gatkCollectOxogMetrics; getOxogSecondaryFiles; gatherOxogMetrics } \
+  from '../gatk-collect-oxog-metrics.nf' params(params)
 
 Channel
   .fromPath(getOxogSecondaryFiles(params.ref_genome_fa), checkIfExists: true)
@@ -39,10 +41,13 @@ workflow {
   main:
     gatkCollectOxogMetrics(
       file(params.seq), \
+      file(params.seq_idx), \
       file(params.ref_genome_fa), \
-      ref_genome_ch.collect()
+      ref_genome_ch.collect(), \
+      file(params.interval_file)
     )
 
-  publish:
-    gatkCollectOxogMetrics.out.oxog_metrics to: 'outdir', overwrite: true
+    gatherOxogMetrics(
+      gatkCollectOxogMetrics.out.oxog_metrics
+    )
 }

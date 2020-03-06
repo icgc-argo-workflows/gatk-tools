@@ -1,4 +1,6 @@
 {
-    "seq": "data/HCC1143_BL-mini-N/cfa409d0-3236-5f07-8634-a2c0de74c8f2.2.20190927.wgs.grch38.bam",
+    "seq": "data/SA610149.0.20200122.wgs.grch38.cram",
+    "seq_idx": "data/SA610149.0.20200122.wgs.grch38.cram.crai",
+    "interval_file": "data/0002-scattered.interval_list",
     "ref_genome_fa": "reference/tiny-grch38-chr11-530001-537000.fa"
 }
