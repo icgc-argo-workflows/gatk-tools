@@ -87,7 +87,7 @@ def main():
             metrics_file_prefix = f"{args.interval_file.split('-')[0]}-{metrics_file_prefix}"
 
         cmd = (
-            f'samtools view -b {interval_arg} -T {args.reference} {args.seq} -o /dev/stdout | '
+            f'samtools view -bu {interval_arg} -T {args.reference} {args.seq} -o /dev/stdout | '
             f'gatk --java-options {jvm_Xmx} CollectOxoGMetrics -I /dev/stdin -O {metrics_file_prefix}.oxog_metrics.txt -R {args.reference}')
 
     else:
