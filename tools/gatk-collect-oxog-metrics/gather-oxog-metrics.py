@@ -8,6 +8,7 @@ import json
 from glob import glob
 import tempfile
 import re
+from math import isnan
 
 om = __import__('gatk-collect-oxog-metrics')
 
@@ -55,7 +56,7 @@ def main():
     merged_metrics.close()
 
     oxoQ_score = om.get_oxoQ(merged_metrics.name)
-    extra_info['oxoQ_score'] = float('%.4f' % oxoQ_score) if oxoQ_score is not None else None
+    extra_info['oxoQ_score'] = float('%.4f' % oxoQ_score) if not isnan(oxoQ_score) else None
     os.remove(merged_metrics.name)
 
     with open("%s.extra_info.json" % basename, 'w') as f:
