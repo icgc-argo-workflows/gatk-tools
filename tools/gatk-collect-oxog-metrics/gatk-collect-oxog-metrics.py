@@ -42,11 +42,14 @@ def get_oxoQ(oxog_metric):
                 NTOT = NTOT + int(line['TOTAL_BASES'])
                 NALTOXO = NALTOXO + int(line['ALT_OXO_BASES'])
                 NALTNON = NALTNON + int(line['ALT_NONOXO_BASES'])
-                oxoQ = float(line['OXIDATION_Q']) if '?' not in line['OXIDATION_Q'] else None
+                oxoQ = float(line['OXIDATION_Q']) if '?' not in line['OXIDATION_Q'] else float('NaN')
 
     if num > 1:
-        er = float(max(NALTOXO - NALTNON, 1.0001)) / float(NTOT)
-        oxoQ = -10.0 * log10(er)
+        if NTOT > 0:
+            er = float(max(NALTOXO - NALTNON, 1.0001)) / float(NTOT)
+            oxoQ = -10.0 * log10(er)
+        else:
+            oxoQ = float('NaN')
 
     return oxoQ
 
