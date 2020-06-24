@@ -40,11 +40,12 @@ Channel
 workflow {
   main:
     gatkCollectOxogMetrics(
-      file(params.seq), \
-      file(params.seq_idx), \
-      file(params.ref_genome_fa), \
-      ref_genome_ch.collect(), \
-      file(params.interval_file)
+      file(params.seq),
+      file(params.seq_idx),
+      file(params.ref_genome_fa),
+      ref_genome_ch.collect(),
+      file(params.interval_file),
+      true
     )
 
     gatherOxogMetrics(
