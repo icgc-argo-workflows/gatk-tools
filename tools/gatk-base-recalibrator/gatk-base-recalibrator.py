@@ -76,8 +76,8 @@ def main():
     if args.known_snv_indel_sites_vcfs:
         cmd = f"{cmd} --known-sites " + ' --known-sites '.join(args.known_snv_indel_sites_vcfs)
 
-    if args.sequence_group_interval:
-        cmd = f"{cmd} -L {args.sequence_group_interval}"
+    if args.interval_file:
+        cmd = f"{cmd} -L {args.interval_file}"
 
     run_cmd(cmd)
 
