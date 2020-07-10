@@ -28,7 +28,7 @@ params.seq = "NO_FILE"
 params.interval_file = "NO_FILE"
 params.container_version = ""
 params.ref_genome_fa = "NO_FILE"
-params.known_snv_indel_sites_vcfs = []
+params.known_sites_vcfs = "NO_FILE"
 params.cpus = 1
 params.mem = 1  // in GB
 
@@ -52,7 +52,7 @@ process gatkBaseRecalibrator {
     path seq_idx
     path ref_genome_fa
     path ref_genome_secondary_file
-    path known_snv_indel_sites_vcfs
+    path known_sites_vcfs
     path interval_file
 
   output:
@@ -60,7 +60,7 @@ process gatkBaseRecalibrator {
 
   script:
     arg_interval_file = interval_file.name == 'NO_FILE' ? "" : "-i ${interval_file}"
-    arg_known_sites = known_snv_indel_sites_vcfs.count() == 0 ? "" : "-k ${known_snv_indel_sites_vcfs}"
+    arg_known_sites = known_sites_vcfs.name == 'NO_FILE' ? "" : "-k ${known_sites_vcfs}"
 
     """
     gatk-base-recalibrator.py -s ${seq} \
@@ -79,11 +79,7 @@ Channel
   .fromPath(getSecondaryFiles(params.ref_genome_fa, ['fai']), checkIfExists: true)
   .set { ref_genome_fai_ch }
 
-if (params.known_snv_indel_sites_vcfs) {
-  known_sites = Channel.fromPath(params.known_snv_indel_sites_vcfs)
-} else {
-  known_sites = Channel.empty()
-}
+known_sites_vcfs = Channel.fromPath(params.known_sites_vcfs)
 
 workflow {
   main:
@@ -92,7 +88,7 @@ workflow {
       seq_crai_ch,
       file(params.ref_genome_fa),
       ref_genome_fai_ch,
-      known_sites,
+      known_sites_vcfs.collect(),
       file(params.interval_file)
     )
 

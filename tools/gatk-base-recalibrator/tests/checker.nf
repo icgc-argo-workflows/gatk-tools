@@ -27,7 +27,7 @@ params.seq = "data/SA610149.0.20200122.wgs.grch38.cram"
 params.interval_file = "NO_FILE"
 params.container_version = ""
 params.ref_genome_fa = "reference/tiny-grch38-chr11-530001-537000.fa"
-params.known_snv_indel_sites_vcfs = []
+params.known_sites_vcfs = "data/tiny-chr11-exac_common_3.hg38.vcf.gz"
 params.cpus = 1
 params.mem = 1  // in GB
 
@@ -41,11 +41,7 @@ Channel
   .fromPath(getSecondaryFiles(params.ref_genome_fa, ['fai']), checkIfExists: true)
   .set { ref_genome_fai_ch }
 
-if (params.known_snv_indel_sites_vcfs) {
-  known_sites = Channel.fromPath(params.known_snv_indel_sites_vcfs)
-} else {
-  known_sites = Channel.empty()
-}
+known_sites_vcfs = Channel.fromPath(params.known_sites_vcfs)
 
 workflow {
   main:
@@ -54,7 +50,7 @@ workflow {
       seq_crai_ch,
       file(params.ref_genome_fa),
       ref_genome_fai_ch,
-      known_sites,
+      known_sites_vcfs.collect(),
       file(params.interval_file)
     )
 
