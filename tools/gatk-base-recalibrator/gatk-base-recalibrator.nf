@@ -34,12 +34,20 @@ params.mem = 1  // in GB
 
 
 def getSecondaryFiles(main_file, exts){
-    def secondaryFiles = []
-    for (ext in exts) {
-        secondaryFiles.add(main_file + '.' + ext)
+  def secondaryFiles = []
+  for (ext in exts) {
+    if (ext.startsWith("^")) {
+      ext = ext.replace("^", "")
+      parts = main_file.split("\\.").toList()
+      parts.removeLast()
+      secondaryFiles.add((parts + [ext]).join("."))
+    } else {
+      secondaryFiles.add(main_file + '.' + ext)
     }
-    return secondaryFiles
+  }
+  return secondaryFiles
 }
+
 
 
 process gatkBaseRecalibrator {
@@ -53,6 +61,7 @@ process gatkBaseRecalibrator {
     path ref_genome_fa
     path ref_genome_secondary_file
     path known_sites_vcfs
+    path known_sites_indices
     path interval_file
 
   output:
@@ -81,6 +90,10 @@ Channel
 
 known_sites_vcfs = Channel.fromPath(params.known_sites_vcfs)
 
+Channel
+  .fromPath(getSecondaryFiles(params.known_sites_vcfs, ['tbi']), checkIfExists: true)
+  .set { known_sites_indices }
+
 workflow {
   main:
     gatkBaseRecalibrator(
@@ -89,6 +102,7 @@ workflow {
       file(params.ref_genome_fa),
       ref_genome_fai_ch,
       known_sites_vcfs.collect(),
+      known_sites_indices.collect(),
       file(params.interval_file)
     )
 

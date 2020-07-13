@@ -71,8 +71,8 @@ def main():
             -R {args.reference} \
             -I {args.input_bam} \
             --use-original-qualities \
-            -O {args.recalibration_report_filename}
-    """
+            -O {args.recalibration_report_filename} """
+
     if args.known_snv_indel_sites_vcfs:
         cmd = f"{cmd} --known-sites " + ' --known-sites '.join(args.known_snv_indel_sites_vcfs)
 
