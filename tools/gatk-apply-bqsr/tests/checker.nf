@@ -26,17 +26,15 @@ nextflow.preview.dsl = 2
 params.seq = "data/SA610149.0.20200122.wgs.grch38.cram"
 params.interval_file = "NO_FILE"
 params.ref_genome_fa = "reference/tiny-grch38-chr11-530001-537000.fa"
-params.recalibration_report = "NO_FILE"
+params.recalibration_report = "data/SA610149.0.20200122.wgs.grch38.cram.recal_data.csv"
 params.cpus = 1
 params.mem = 1  // in GB
 
 include {gatkApplyBQSR; getSecondaryFiles} from '../gatk-apply-bqsr'
 
-/*
 Channel
   .fromPath(getSecondaryFiles(params.seq, ['crai']), checkIfExists: true)
   .set { seq_crai_ch }
-*/
 
 Channel
   .fromPath(getSecondaryFiles(params.ref_genome_fa, ['^dict', 'fai']), checkIfExists: true)
@@ -47,6 +45,7 @@ workflow {
   main:
     gatkApplyBQSR(
       file(params.seq),
+      seq_crai_ch,
       file(params.ref_genome_fa),
       ref_genome_fai_ch.collect(),
       file(params.recalibration_report),

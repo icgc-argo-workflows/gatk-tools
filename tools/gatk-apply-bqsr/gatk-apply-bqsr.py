@@ -64,6 +64,7 @@ def main():
             -XX:+PrintGCDetails -Xloggc:gc_log.log -XX:GCTimeLimit=50 -XX:GCHeapFreeLimit=10 \
             -Dsamjdk.compression_level={args.compression_level} -Xms{args.jvm_mem}m" \
             ApplyBQSR \
+            --create-output-bam-md5 \
             --add-output-sam-program-record \
             -R {args.reference} \
             -I {args.input_bam} \

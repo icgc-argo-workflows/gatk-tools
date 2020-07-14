@@ -57,6 +57,7 @@ process gatkApplyBQSR {
 
   input:
     path seq
+    path seq_idx
     path ref_genome_fa
     path ref_genome_secondary_file
     path recalibration_report
@@ -65,6 +66,8 @@ process gatkApplyBQSR {
 
   output:
     path "${output_bam_basename}.bam", emit: recalibrated_bam
+    path "${output_bam_basename}.bam.bai", emit: recalibrated_bam_bai
+    path "${output_bam_basename}.bam.md5", emit: recalibrated_bam_md5
 
   script:
     arg_interval_file = interval_file.name == 'NO_FILE' ? "" : "-i ${interval_file}"
@@ -75,5 +78,7 @@ process gatkApplyBQSR {
                       -m ${(int) (params.mem * 1000)} \
                       -c ${recalibration_report} \
                       -o ${output_bam_basename} ${arg_interval_file}
+
+    ln -s ${output_bam_basename}.bai ${output_bam_basename}.bam.bai
     """
 }
