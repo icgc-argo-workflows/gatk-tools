@@ -32,30 +32,28 @@ params.mem = 1  // in GB
 
 include {gatkApplyBQSR; getSecondaryFiles} from '../gatk-apply-bqsr'
 
+/*
 Channel
   .fromPath(getSecondaryFiles(params.seq, ['crai']), checkIfExists: true)
   .set { seq_crai_ch }
+*/
 
 Channel
   .fromPath(getSecondaryFiles(params.ref_genome_fa, ['^dict', 'fai']), checkIfExists: true)
   .set { ref_genome_fai_ch }
 
-known_sites_vcfs = Channel.fromPath(params.known_sites_vcfs)
-
-known_sites_indices = known_sites_vcfs.flatMap { v -> getSecondaryFiles(v, ['tbi']) }
 
 workflow {
   main:
-    gatkBaseRecalibrator(
+    gatkApplyBQSR(
       file(params.seq),
-      seq_crai_ch,
       file(params.ref_genome_fa),
       ref_genome_fai_ch.collect(),
-      known_sites_vcfs.collect(),
-      known_sites_indices.collect(),
-      file(params.interval_file)
+      file(params.recalibration_report),
+      file(params.interval_file),
+      'recalibrated_bam'
     )
 
   publish:
-    gatkBaseRecalibrator.out.recalibration_report to: "output"
+    gatkApplyBQSR.out.recalibrated_bam to: "output"
 }
