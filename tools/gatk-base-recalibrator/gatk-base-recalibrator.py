@@ -17,15 +17,9 @@ Authors:
 """
 
 
-import os
 import sys
 import subprocess
 import argparse
-import csv
-import re
-import json
-from math import log10
-import uuid
 
 
 def run_cmd(cmd):
