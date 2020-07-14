@@ -55,4 +55,6 @@ workflow {
 
   publish:
     gatkApplyBQSR.out.recalibrated_bam to: "output"
+    gatkApplyBQSR.out.recalibrated_bam_bai to: "output"
+    gatkApplyBQSR.out.recalibrated_bam_md5 to: "output"
 }
