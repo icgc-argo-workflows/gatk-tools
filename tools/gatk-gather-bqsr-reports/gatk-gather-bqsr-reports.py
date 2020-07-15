@@ -59,9 +59,6 @@ def main():
             -I {input_bqsr_reports} \
             -O {args.output_report_filename} """
 
-    if args.interval_file:
-        cmd = f"{cmd} -L {args.interval_file}"
-
     run_cmd(cmd)
 
 
