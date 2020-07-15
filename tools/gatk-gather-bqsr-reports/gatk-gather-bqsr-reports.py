@@ -47,7 +47,7 @@ def main():
     parser.add_argument('-i', dest='input_bqsr_reports', type=str, nargs="+",
                         help='Input BQSR reports to be merged', required=True)
     parser.add_argument('-o', dest='output_report_filename', type=str, required=True,
-                        help='Basename of the output recalibrated BAM')
+                        help='Name of the output merged BQSR report file')
 
     args = parser.parse_args()
 

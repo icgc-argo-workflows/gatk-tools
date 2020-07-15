@@ -46,6 +46,7 @@ process gatkGatherBQSRReports {
 
   script:
     """
-    gatk-gather-bqsr-reports.py -i ${input_bqsr_reports} -o ${output_report_filename}
+    gatk-gather-bqsr-reports.py -m ${(int) (params.mem * 1000)} \
+      -i ${input_bqsr_reports} -o ${output_report_filename}
     """
 }
