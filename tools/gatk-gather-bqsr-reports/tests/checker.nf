@@ -24,7 +24,7 @@
 nextflow.preview.dsl = 2
 
 params.input_bqsr_reports = ["data/SA610149.0.20200122.wgs.grch38.cram.recal_data.csv"]
-params.output_report_filename = 'recalibrate-report.csv'
+params.output_report_filename = 'recalibration-report.csv'
 params.cpus = 1
 params.mem = 1  // in GB
 
