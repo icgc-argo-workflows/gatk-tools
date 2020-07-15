@@ -51,7 +51,7 @@ def main():
 
     args = parser.parse_args()
 
-    input_bqsr_reports = '-I '.join(args.input_bqsr_reports)
+    input_bqsr_reports = ' -I '.join(args.input_bqsr_reports)
 
     cmd = f"""
         gatk --java-options "-Xms{args.jvm_mem}m" \

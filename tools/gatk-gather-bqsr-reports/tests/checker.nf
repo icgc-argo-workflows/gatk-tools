@@ -37,7 +37,7 @@ Channel
 workflow {
   main:
     gatkGatherBQSRReports(
-      bqsr_reports,
+      bqsr_reports.collect(),
       params.output_report_filename
     )
 
