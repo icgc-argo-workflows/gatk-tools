@@ -1,0 +1,8 @@
+{
+  "input_bams": [
+    "data/test1.bam",
+    "data/test1.bam"
+  ],
+  "output_bam_basename": "final_bam",
+  "compress_level": 9
+}
