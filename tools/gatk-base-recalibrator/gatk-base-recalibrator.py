@@ -52,7 +52,7 @@ def main():
                         help='Interval file, eg, bed file, to specify working interval')
     parser.add_argument('-o', dest='recalibration_report_filename', type=str, required=True,
                         help='Output recalibration report filename')
-    parser.add_argument('-k', dest='known_snv_indel_sites_vcfs', type=str,
+    parser.add_argument('-k', dest='known_snv_indel_sites_vcfs', type=str, required=True,
                         help='Known SNV / InDel sites, eg, dbSNP, gnomAD VCF file(s)', nargs='+')
 
     args = parser.parse_args()
