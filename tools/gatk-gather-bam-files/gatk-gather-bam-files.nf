@@ -45,6 +45,8 @@ process gatkGatherBamFiles {
 
   output:
     path "${output_bam_basename}.bam", emit: merged_bam
+    path "${output_bam_basename}.bam.bai", emit: merged_bam_bai
+    path "${output_bam_basename}.bam.md5", emit: merged_bam_md5
 
   script:
     arg_compression_level = compression_level != "null" ? compression_level : 5
@@ -53,5 +55,7 @@ process gatkGatherBamFiles {
     gatk-gather-bam-files.py -m ${(int) (params.mem * 1000)} \
       -i ${input_bams} -o ${output_bam_basename} \
       -c ${arg_compression_level}
+
+    ln -s ${output_bam_basename}.bai ${output_bam_basename}.bam.bai
     """
 }

@@ -46,4 +46,6 @@ workflow {
 
   publish:
     gatkGatherBamFiles.out.merged_bam to: "output"
+    gatkGatherBamFiles.out.merged_bam_bai to: "output"
+    gatkGatherBamFiles.out.merged_bam_md5 to: "output"
 }
