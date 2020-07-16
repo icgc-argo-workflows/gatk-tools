@@ -44,28 +44,24 @@ def main():
 
     parser.add_argument('-m', '--jvm-mem', dest='jvm_mem', type=int,
                         help='JVM max memory in MB', default=500)
-    parser.add_argument('-i', dest='input_bqsr_reports', type=str, nargs="+",
-                        help='Input BQSR reports to be merged', required=True)
-    parser.add_argument('-o', dest='output_report_filename', type=str, required=True,
-                        help='Name of the output merged BQSR report file')
+    parser.add_argument('-i', dest='input_bams', type=str, nargs="+",
+                        help='Input BAM files to be merged', required=True)
+    parser.add_argument('-o', dest='output_bam_basename', type=str, required=True,
+                        help='Name of the output merged BAM file')
+    parser.add_argument('-c', dest='compression_level', type=int, default=5,
+                        help='Compression level of the output BAM')
 
     args = parser.parse_args()
 
-    input_bqsr_reports = ' -I '.join(args.input_bqsr_reports)
+    input_bams = ' -I '.join(args.input_bams)
 
     cmd = f"""
-        java -Dsamjdk.compression_level=~{compression_level} -Xms{jvm_mem}m -jar /usr/gitc/picard.jar \
+        java -Dsamjdk.compression_level={args.compression_level} -Xms{args.jvm_mem}m -jar /gatk/gatk.jar \
             GatherBamFiles \
-            INPUT={sep=' INPUT=' input_bams} \
-            OUTPUT={output_bam_basename}.bam \
-            CREATE_INDEX=true \
-            CREATE_MD5_FILE=true """
-
-        """
-        gatk --java-options "-Xms{args.jvm_mem}m" \
-            GatherBamFiles \
-            -I {input_bqsr_reports} \
-            -O {args.output_report_filename} """
+            -I {input_bams} \
+            -O {args.output_bam_basename}.bam \
+            --CREATE_INDEX true \
+            --CREATE_MD5_FILE true """
 
     run_cmd(cmd)
 

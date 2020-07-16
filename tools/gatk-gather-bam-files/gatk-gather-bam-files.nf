@@ -24,8 +24,9 @@
 nextflow.preview.dsl = 2
 version = '4.1.8.0-1.0'
 
-params.input_bqsr_reports = "NO_FILE"
-params.output_report_filename = "bqsr_report.csv"
+params.input_bams = "NO_FILE"
+params.output_bam_basename = "final_bam"
+params.compression_level = 5
 
 params.cpus = 1
 params.mem = 1  // in GB
@@ -38,15 +39,19 @@ process gatkGatherBamFiles {
   memory "${params.mem} GB"
 
   input:
-    path input_bqsr_reports
-    val output_report_filename
+    path input_bams
+    val output_bam_basename
+    val compression_level
 
   output:
-    path "${output_report_filename}", emit: merged_bam
+    path "${output_bam_basename}.bam", emit: merged_bam
 
   script:
+    arg_compression_level = compression_level != "null" ? compression_level : 5
+
     """
     gatk-gather-bam-files.py -m ${(int) (params.mem * 1000)} \
-      -i ${input_bqsr_reports} -o ${output_report_filename}
+      -i ${input_bams} -o ${output_bam_basename} \
+      -c ${arg_compression_level}
     """
 }

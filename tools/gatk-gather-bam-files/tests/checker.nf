@@ -23,22 +23,25 @@
 
 nextflow.preview.dsl = 2
 
-params.input_bqsr_reports = ["data/SA610149.0.20200122.wgs.grch38.cram.recal_data.csv"]
-params.output_report_filename = 'recalibration-report.csv'
+params.input_bams = "NO_FILE"
+params.output_bam_basename = "final_bam"
+params.compression_level = "null"
+
 params.cpus = 1
 params.mem = 1  // in GB
 
 include gatkGatherBamFiles from '../gatk-gather-bam-files'
 
 Channel
-  .fromPath(params.input_bqsr_reports)
-  .set { bqsr_reports }
+  .fromPath(params.input_bams)
+  .set { input_bams }
 
 workflow {
   main:
     gatkGatherBamFiles(
-      bqsr_reports.collect(),
-      params.output_report_filename
+      input_bams.collect(),
+      params.output_bam_basename,
+      params.compression_level
     )
 
   publish:
