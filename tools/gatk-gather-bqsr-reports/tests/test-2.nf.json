@@ -1,0 +1,7 @@
+{
+  "output_report_filename": "recalibration-report.csv",
+  "input_bqsr_reports": [
+    "data/0000-SA610149.0.20200122.wgs.grch38.cram.recal_data.csv",
+    "data/0001-SA610149.0.20200122.wgs.grch38.cram.recal_data.csv"
+  ]
+}
