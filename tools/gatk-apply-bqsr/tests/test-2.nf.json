@@ -1,0 +1,6 @@
+{
+  "seq": "data/SA610149.0.20200122.wgs.grch38.cram",
+  "ref_genome_fa": "reference/tiny-grch38-chr11-530001-537000.fa",
+  "recalibration_report": "data/SA610149.0.20200122.wgs.grch38.cram.recal_data.csv",
+  "interval_file": "data/0000-scattered.interval_list"
+}
