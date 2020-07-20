@@ -38,25 +38,25 @@ include {gatkGetPileupSummaries; getSecondaryFiles} from '../gatk-get-pileup-sum
 
 Channel
   .fromPath(getSecondaryFiles(params.seq, ['bai', 'crai']))
-  .set { seq_ch }
+  .set { seq_sec_ch }
 
 Channel
   .fromPath(getSecondaryFiles(params.ref_genome_fa, ['fai', '^dict']), checkIfExists: true)
-  .set { ref_genome_ch }
+  .set { ref_genome_sec_ch }
 
 Channel
   .fromPath(getSecondaryFiles(params.variants_resources, ['tbi']), checkIfExists: true)
-  .set { variants_ch }
+  .set { variants_sec_ch }
 
 workflow {
   main:
     gatkGetPileupSummaries(
       file(params.seq),
-      seq_ch.collect(),
+      seq_sec_ch.collect(),
       file(params.ref_genome_fa),
-      ref_genome_ch.collect(),
+      ref_genome_sec_ch.collect(),
       file(params.variants_resources),
-      variants_ch.collect(),
+      variants_sec_ch.collect(),
       file(params.interval_file)
     )
 
