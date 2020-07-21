@@ -1,0 +1,4 @@
+{
+  "input_bams": "data/HCC1143_BL-mini-N/cfa409d0-3236-5f07-8634-a2c0de74c8f2.5.20190927.wgs.grch38.bam",
+  "output_bam_basename": "final_bam"
+}
