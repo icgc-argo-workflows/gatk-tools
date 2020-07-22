@@ -53,7 +53,7 @@ def main():
 
     args = parser.parse_args()
 
-    input_bams = ' -I '.join(args.input_bams)
+    input_bams = ' -I '.join(sorted(args.input_bams))  # this assumes the scatter files are named like: 0000-*, 0001-*, 00002-*
 
     cmd = f"""
         java -Dsamjdk.compression_level={args.compression_level} -Xms{args.jvm_mem}m -jar /gatk/gatk.jar \
