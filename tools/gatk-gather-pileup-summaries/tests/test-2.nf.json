@@ -1,0 +1,5 @@
+{
+  "input_pileup": "data/HCC1143-mini-T/pileups.table",
+  "ref_genome_dict": "reference/tiny-grch38-chr11-530001-537000.dict",
+  "output_name": "my_merged_pileup.tsv"
+}
