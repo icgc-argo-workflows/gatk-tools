@@ -75,14 +75,8 @@ process gatkMutect2 {
     path "${arg_output_prefix}.f1r2_tar_gz", emit: f1r2_counts
 
   script:
-    if (interval_file.name.startsWith('NO_FILE')) {
-      arg_interval_file = ""
-      arg_output_prefix = tumour_reads
-    } else {
-      arg_interval_file = "-L ${interval_file}"
-      interval_prefix = interval_file.name.split("-").toList()[0]
-      arg_output_prefix = "${interval_prefix}.${tumour_reads}"
-    }
+    arg_interval_file = interval_file.name.startsWith('NO_FILE') ? "" : "-L ${interval_file}"
+    arg_output_prefix = tumour_reads
     arg_germline_resource = germline_resource.name.startsWith('NO_FILE') ? "" : "-g ${germline_resource}"
 
     """
