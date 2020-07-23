@@ -23,11 +23,11 @@
 
 nextflow.preview.dsl = 2
 
-params.tumour_reads = "data/HCC1143-mini-T/8f879c15-14da-593d-bb76-db866f81ab3a.6.20190927.wgs.grch38.bam"
-params.normal_reads = "data/HCC1143_BL-mini-N/cfa409d0-3236-5f07-8634-a2c0de74c8f2.5.20190927.wgs.grch38.bam"
-params.interval_file = "data/0000-scattered.interval_list"
-params.ref_genome_fa = "reference/tiny-grch38-chr11-530001-537000.fa"
-params.germline_resource = "data/*.vcf.gz"
+params.tumour_reads = "NO_FILE1"
+params.normal_reads = "NO_FILE2"
+params.interval_file = "NO_FILE3"
+params.ref_genome_fa = "NO_FILE4"
+params.germline_resource = "NO_FILE5"
 
 params.container_version = ""
 params.cpus = 1
