@@ -59,9 +59,9 @@ workflow {
       file(params.normal_reads),
       normal_idx_ch,
       file(params.ref_genome_fa),
-      ref_genome_secondary_file,
-      germline_resource,
-      germline_resource_idx,
+      ref_genome_secondary_file.collect(),
+      germline_resource.collect(),
+      germline_resource_idx.collect(),
       file(params.interval_file)
     )
 
@@ -69,5 +69,6 @@ workflow {
     gatkMutect2.out.output_vcf to: "output"
     gatkMutect2.out.mutect_stats to: "output"
     gatkMutect2.out.bam_output to: "output"
+    gatkMutect2.out.bam_output_bai to: "output"
     gatkMutect2.out.f1r2_counts to: "output"
 }
