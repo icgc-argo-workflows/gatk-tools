@@ -51,7 +51,7 @@ def main():
 
     args = parser.parse_args()
 
-    input_bqsr_reports = ' -I '.join(args.input_bqsr_reports)
+    input_bqsr_reports = ' -I '.join(sorted(args.input_bqsr_reports))  # this assumes the scatter files are named like: 0000-*, 0001-*, 00002-*
 
     cmd = f"""
         gatk --java-options "-Xms{args.jvm_mem}m" \
