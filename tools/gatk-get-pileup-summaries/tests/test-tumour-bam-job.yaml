@@ -11,4 +11,3 @@ variants:  # variants_for_contamination
 intervals:  # file with intervals over which to operate
     class: File
     path: data/my-intervals.bed
-output_name: "pileups.table"

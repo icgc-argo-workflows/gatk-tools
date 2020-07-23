@@ -1,7 +1,7 @@
 jvm_mem: 500
 intervals:
   class: File
-  path: data/0000-scattered.interval_list
+  path: data/0001-scattered.interval_list
 ref_fa:  # Reference fa file
     class: File
     path: reference/tiny-grch38-chr11-530001-537000.fa
@@ -11,4 +11,4 @@ seq_file:  # BAM/SAM/CRAM
 variants:  # variants_for_contamination
     class: File
     path: data/tiny-chr11-exac_common_3.hg38.vcf.gz
-output_name: "pileups.table"  # output will be prefixed with prefix of interval file if provided 
+
