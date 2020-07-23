@@ -69,10 +69,10 @@ process gatkMutect2 {
     path interval_file
 
   output:
-    path "${arg_output_prefix}.vcf.gz", emit: output_vcf
-    path "${arg_output_prefix}.stats", emit: mutect_stats
-    path "${arg_output_prefix}.bamout.bam", emit: bam_output
-    path "${arg_output_prefix}.f1r2_tar_gz", emit: f1r2_counts
+    path "*${arg_output_prefix}.vcf.gz", emit: output_vcf
+    path "*${arg_output_prefix}.stats", emit: mutect_stats
+    path "*${arg_output_prefix}.bamout.bam", emit: bam_output
+    path "*${arg_output_prefix}.f1r2_tar_gz", emit: f1r2_counts
 
   script:
     arg_interval_file = interval_file.name.startsWith('NO_FILE') ? "" : "-L ${interval_file}"
