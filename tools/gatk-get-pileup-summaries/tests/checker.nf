@@ -61,5 +61,5 @@ workflow {
     )
 
   publish:
-    gatkGetPileupSummaries.out.pileups_table to: "output"
+    gatkGetPileupSummaries.out.pileups_metrics to: "output"
 }
