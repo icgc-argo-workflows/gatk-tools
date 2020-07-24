@@ -1,6 +1,4 @@
 {
   "tumour_pileups": "data/tumour_pileups.table",
-  "normal_pileups": "data/normal_pileups.table",
-  "segmentation_output": "test_tumour_segmentation.table",
-  "contamination_output": "test_contamination.table"
+  "normal_pileups": "data/normal_pileups.table"
 }

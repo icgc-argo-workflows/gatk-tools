@@ -4,6 +4,7 @@ import os
 import sys
 import subprocess
 import argparse
+import re
 
 def run_cmd(cmd):
     try:
@@ -30,15 +31,18 @@ def main():
                         help='Pileup summary from tumour reads', required=True)
     parser.add_argument('-matched', dest='normal_pileups', type=str,
                         help='Pileup summary from matched normal reads')
-    parser.add_argument('--tumor-segmentation', dest='segmentation_output', type=str,
-                        help='Output file name for tumour segment table')
-    parser.add_argument('-O', dest='contamination_output', type=str,
-                        help='Output file name for contamination table', required=True)
+    parser.add_argument('-s', dest='specimen_type', type=str,
+                        help='Specify whether it is normal or tumour and allow output files name contain the speciment info')
 
     args = parser.parse_args()
 
-    cmd = 'gatk --java-options "-Xmx%sm" CalculateContamination -I %s --tumor-segmentation %s -O %s' % (
-            args.jvm_mem, args.tumour_pileups, args.segmentation_output, args.contamination_output
+    basename = re.sub(r'\.pileups_metrics\.tsv$', '', os.path.basename(args.tumour_pileups))
+    if args.specimen_type:
+        basename = basename + '.' + args.specimen_type
+    
+    cmd = 'gatk --java-options "-Xmx%sm" CalculateContamination -I %s -O %s.contamination_metrics \
+                --tumor-segmentation %s.segmentation_metrics' % (
+            args.jvm_mem, args.tumour_pileups, basename, basename
         )
 
     if args.normal_pileups:

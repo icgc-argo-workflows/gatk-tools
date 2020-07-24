@@ -5,5 +5,4 @@ tumour_pileups:
 normal_pileups:
   class: File
   path: data/HCC1143_BL-mini-N/pileups.table
-segmentation_output: segments.table
-contamination_output: contamination.table
+tumour_normal: tumour

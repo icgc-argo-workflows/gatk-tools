@@ -26,8 +26,7 @@ nextflow.preview.dsl = 2
 
 params.tumour_pileups = "NO_FILE"
 params.normal_pileups = "NO_FILE"
-params.segmentation_output = "tumour_segmentation.table"
-params.contamination_output = "contamination.table"
+params.tumour_normal = ""
 
 params.container_version = ""
 params.cpus = 1
@@ -40,10 +39,11 @@ workflow {
   main:
     gatkCalculateContamination(
       file(params.tumour_pileups),
-      file(params.normal_pileups)
+      file(params.normal_pileups),
+      params.tumour_normal
     )
 
   publish:
-    gatkCalculateContamination.out.tumour_segmentation_table to: "output"
-    gatkCalculateContamination.out.contamination_table to: "output"
+    gatkCalculateContamination.out.segmentation_metrics to: "output"
+    gatkCalculateContamination.out.contamination_metrics to: "output"
 }

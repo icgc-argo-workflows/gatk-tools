@@ -23,12 +23,11 @@
  */
 
 nextflow.preview.dsl = 2
-version = '4.1.8.0-1.0'
+version = '4.1.8.0-2.0'
 
 params.tumour_pileups = "NO_FILE"
 params.normal_pileups = "NO_FILE"
-params.segmentation_output = "tumour_segmentation.table"
-params.contamination_output = "contamination.table"
+params.tumour_normal = ""
 
 params.container_version = ""
 params.cpus = 1
@@ -43,20 +42,27 @@ process gatkCalculateContamination {
   input:
     path tumour_pileups
     path normal_pileups
+    val tumour_normal
 
   output:
-    path "${params.segmentation_output}", emit: tumour_segmentation_table
-    path "${params.contamination_output}", emit: contamination_table
+    path "*.contamination_metrics", emit: contamination_metrics
+    path "*.segmentation_metrics", emit: segmentation_metrics
 
   script:
 
     arg_normal_pileups = normal_pileups.name == 'NO_FILE' ? "" : "-matched ${normal_pileups}"
+    arg_tumour_normal = tumour_normal == "" ? "" : "-s ${tumour_normal}"
 
     """
+    set -euxo pipefail
+    if [ "${tumour_normal}" != "normal" ] && [ "${tumour_normal}" != "tumour" ] && [ "${tumour_normal}" != "" ]; then
+      echo "parameter 'tumour_normal' must be either 'tumour' or 'normal' if provided"
+      exit 1
+    fi
+
     gatk-calculate-contamination.py -I ${tumour_pileups} \
                       ${arg_normal_pileups} \
                       -j ${(int) (params.mem * 1000)} \
-                      -O ${params.contamination_output} \
-                      --tumor-segmentation ${params.segmentation_output}
+                      ${arg_tumour_normal}
     """
 }
