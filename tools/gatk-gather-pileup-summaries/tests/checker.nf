@@ -26,7 +26,6 @@ nextflow.preview.dsl = 2
 
 params.ref_genome_dict = "reference/tiny-grch38-chr11-530001-537000.dict"
 params.input_pileup = "NO_FILE"
-params.output_name = "merged_pileup.tsv"
 
 params.container_version = ""
 params.cpus = 1
@@ -47,5 +46,5 @@ workflow {
     )
 
   publish:
-    gatkGatherPileupSummaries.out.merged_pileup to: "output"
+    gatkGatherPileupSummaries.out.merged_pileups_metrics to: "output"
 }

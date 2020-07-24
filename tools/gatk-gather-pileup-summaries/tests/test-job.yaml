@@ -3,5 +3,7 @@ ref_dict:
   path: reference/tiny-grch38-chr11-530001-537000.dict
 input_pileup:  # array of type "File"
   - class: File
-    path: data/HCC1143-mini-T/pileups.table
-output_name: merged.pipeups.tsv  # output file name, must ends with .vcf.gz
+    path: data/0001-SA610149.0.20200122.wgs.grch38.cram.pileups_metrics.txt
+  - class: File
+    path: data/0002-SA610149.0.20200122.wgs.grch38.cram.pileups_metrics.txt  
+

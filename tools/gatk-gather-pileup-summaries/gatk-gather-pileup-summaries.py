@@ -4,6 +4,7 @@ import os
 import sys
 import subprocess
 import argparse
+import re
 
 def run_cmd(cmd):
     try:
