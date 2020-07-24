@@ -27,7 +27,7 @@ nextflow.preview.dsl = 2
 params.seq = "data/HCC1143_BL-mini-N/cfa409d0-3236-5f07-8634-a2c0de74c8f2.5.20190927.wgs.grch38.bam"
 params.ref_genome_fa = "reference/tiny-grch38-chr11-530001-537000.fa"
 params.variants_resources = "data/tiny-chr11-exac_common_3.hg38.vcf.gz"
-params.interval_file = "data/my-intervals.bed"
+params.interval_file = "NO_FILE"
 
 params.container_version = ""
 params.cpus = 1

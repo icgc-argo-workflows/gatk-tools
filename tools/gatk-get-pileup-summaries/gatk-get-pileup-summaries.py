@@ -49,23 +49,28 @@ def main():
     parser.add_argument('-I', dest='input_seq', type=str,
                         help='BAM/SAM/CRAM file containing reads', required=True)
     parser.add_argument('-L', dest='intervals', type=str,
-                        help='One or more genomic intervals over which to operate', required=True)
+                        help='One or more genomic intervals over which to operate')
     parser.add_argument('-V', dest='variants', type=str,
                         help='A VCF file containing variants and allele frequencies', required=True)
 
     args = parser.parse_args()
-    interval_file = os.path.basename(args.intervals)
     seq_name = os.path.basename(args.input_seq)
 
     if args.intervals:
+        interval_file = os.path.basename(args.intervals)
         output_prefix = f"{interval_file.split('-')[0]}-{seq_name}"
+    else:
+        output_prefix = seq_name
 
     cmd = (f'gatk --java-options "-Xmx{args.jvm_mem}m" GetPileupSummaries -I {args.input_seq} '
            f'--interval-set-rule INTERSECTION -L {args.variants} -V {args.variants} '
-           f'-L {args.intervals} -O {output_prefix}.pileups_metrics.txt') 
+           f'-O {output_prefix}.pileups_metrics.txt') 
+
+    if args.intervals:
+        cmd = cmd + f' -L {args.intervals}'
 
     if args.ref_fa:
-        cmd = cmd + f' -R {args.ref_fa}' 
+        cmd = cmd + f' -R {args.ref_fa}'
 
     run_cmd(cmd)
 

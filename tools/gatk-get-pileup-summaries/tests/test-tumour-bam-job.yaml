@@ -8,6 +8,4 @@ seq_file:  # BAM/SAM/CRAM
 variants:  # variants_for_contamination
     class: File
     path: data/tiny-chr11-exac_common_3.hg38.vcf.gz
-intervals:  # file with intervals over which to operate
-    class: File
-    path: data/my-intervals.bed
+

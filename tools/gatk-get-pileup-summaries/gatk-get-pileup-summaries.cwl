@@ -30,7 +30,7 @@ inputs:
       prefix: -V
     secondaryFiles: ['.tbi']
   intervals:
-    type: File
+    type: File?
     inputBinding:
       prefix: -L
 

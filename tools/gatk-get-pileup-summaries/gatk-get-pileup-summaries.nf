@@ -69,11 +69,11 @@ process gatkGetPileupSummaries {
 
   script:
     arg_ref_genome_fa = ref_genome_fa.name == 'NO_FILE' ? "" : "-R ${ref_genome_fa}"
-
+    arg_interval_file = interval_file.name == 'NO_FILE' ? "" : "-L ${interval_file}"
     """
     gatk-get-pileup-summaries.py -I ${seq} \
                       -V ${variants_resources} \
-                      -L ${interval_file} \
+                      ${arg_interval_file} \
                       -j ${(int) (params.mem * 1000)} \
                       ${arg_ref_genome_fa}
     """
