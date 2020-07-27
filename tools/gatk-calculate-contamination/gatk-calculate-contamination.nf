@@ -38,6 +38,7 @@ process gatkCalculateContamination {
   container "quay.io/icgc-argo/gatk-calculate-contamination:gatk-calculate-contamination.${params.container_version ?: version}"
   cpus params.cpus
   memory "${params.mem} GB"
+  publishDir "output/calculateContamination"
 
   input:
     path tumour_pileups

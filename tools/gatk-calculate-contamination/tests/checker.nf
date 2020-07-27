@@ -33,7 +33,7 @@ params.cpus = 1
 params.mem = 1  // in GB
 
 
-include gatkCalculateContamination from '../gatk-calculate-contamination'
+include { gatkCalculateContamination } from '../gatk-calculate-contamination'
 
 workflow {
   main:
@@ -43,7 +43,8 @@ workflow {
       params.tumour_normal
     )
 
-  publish:
-    gatkCalculateContamination.out.segmentation_metrics to: "output"
-    gatkCalculateContamination.out.contamination_metrics to: "output"
+  emit:
+      segmentation_metrics = gatkCalculateContamination.out.segmentation_metrics
+      contamination_metrics = gatkCalculateContamination.out.contamination_metrics
+
 }
