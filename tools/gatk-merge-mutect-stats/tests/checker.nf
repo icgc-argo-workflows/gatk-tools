@@ -35,7 +35,7 @@ include gatkMergeMutectStats from '../gatk-merge-mutect-stats'
 workflow {
   main:
     gatkMergeMutectStats(
-      file(params.input_stats),
+      Channel.fromPath(params.input_stats).collect(),
       params.output_basename
     )
 }
