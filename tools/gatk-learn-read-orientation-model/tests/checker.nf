@@ -38,7 +38,4 @@ workflow {
       file(params.input_f1r2_tar_gz),
       params.output_basename
     )
-
-  publish:
-    gatkLearnReadOrientationModel.out.artifact_prior_table to: "output"
 }
