@@ -35,7 +35,7 @@ include gatkMergeVcfs from '../gatk-merge-vcfs'
 workflow {
   main:
     gatkMergeVcfs(
-      file(params.input_vcfs),
+      Channel.fromPath(params.input_vcfs).collect(),
       params.output_basename
     )
 }

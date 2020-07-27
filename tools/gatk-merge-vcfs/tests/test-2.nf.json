@@ -1,0 +1,7 @@
+{
+  "input_vcfs": [
+     "data/HCC1143-mini-Mutect2-calls/HCC1143.mutect2.vcf.gz",
+     "data/HCC1143-mini-Mutect2-calls/HCC1143.mutect2.copy.vcf.gz"
+  ],
+  "output_basename": "merged"
+}
