@@ -60,6 +60,4 @@ workflow {
       file(params.interval_file)
     )
 
-  publish:
-    gatkGetPileupSummaries.out.pileups_metrics to: "output"
 }
