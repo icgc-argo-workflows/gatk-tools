@@ -25,7 +25,6 @@ nextflow.preview.dsl = 2
 version = '4.1.8.0-2.0'
 
 params.input_f1r2_tar_gz = "NO_FILE"
-params.output_basename = "NO_FILE"
 
 params.container_version = ""
 params.cpus = 1
@@ -39,7 +38,6 @@ process gatkLearnReadOrientationModel {
 
   input:
     path input_f1r2_tar_gz
-    val output_basename
 
   output:
     path "${output_basename}.tar.gz", emit: artifact_prior_table
@@ -49,6 +47,6 @@ process gatkLearnReadOrientationModel {
     gatk-learn-read-orientation-model.py \
                       -j ${(int) (params.mem * 1000)} \
                       -I ${input_f1r2_tar_gz} \
-                      -O ${output_basename}.tar.gz
+                      -O ${input_f1r2_tar_gz.baseName}.read-orientation.artifact-priors.tar.gz
     """
 }

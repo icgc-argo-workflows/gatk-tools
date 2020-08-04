@@ -24,7 +24,6 @@
 nextflow.preview.dsl = 2
 
 params.input_f1r2_tar_gz = "data/HCC1143-mini-T/HCC1143.f1r2.tar.gz"
-params.output_basename = "artifact-priors"
 
 params.container_version = ""
 params.cpus = 1
@@ -35,7 +34,6 @@ include gatkLearnReadOrientationModel from '../gatk-learn-read-orientation-model
 workflow {
   main:
     gatkLearnReadOrientationModel(
-      file(params.input_f1r2_tar_gz),
-      params.output_basename
+      file(params.input_f1r2_tar_gz)
     )
 }
