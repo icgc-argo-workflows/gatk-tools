@@ -1,4 +1,3 @@
 {
-  "input_f1r2_tar_gz": "data/HCC1143-mini-T/HCC1143.f1r2.tar.gz",
-  "output_basename": "artifact-priors"
+  "input_f1r2_tar_gz": "data/HCC1143-mini-T/HCC1143.f1r2.tar.gz"
 }

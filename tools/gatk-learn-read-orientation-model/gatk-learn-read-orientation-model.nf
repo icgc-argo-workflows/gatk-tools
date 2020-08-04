@@ -40,7 +40,7 @@ process gatkLearnReadOrientationModel {
     path input_f1r2_tar_gz
 
   output:
-    path "${output_basename}.tar.gz", emit: artifact_prior_table
+    path "${input_f1r2_tar_gz.baseName}.read-orientation.artifact-priors.tar.gz", emit: artifact_prior_table
 
   script:
     """
