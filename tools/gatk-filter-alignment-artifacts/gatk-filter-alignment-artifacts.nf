@@ -44,6 +44,7 @@ process gatkFilterAlignmentArtifacts {
     path tumour_seq
     path tumour_seq_idx
     path ref_fa
+    path ref_fa_2nd
     path bwa_mem_index_image
     path input_vcf
     path input_vcf_idx

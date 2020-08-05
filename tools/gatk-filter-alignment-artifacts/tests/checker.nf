@@ -59,6 +59,7 @@ workflow {
       file(params.tumour_seq),
       Channel.fromPath(getSecondaryFiles(params.tumour_seq, ['bai', 'crai'])),
       file(params.ref_fa),
+      Channel.fromPath(getSecondaryFiles(params.ref_fa, ['fai', '^dict'])).collect(),
       file(params.bwa_mem_index_image),
       file(params.input_vcf),
       Channel.fromPath(getSecondaryFiles(params.input_vcf, ['tbi']), checkIfExists: true),
