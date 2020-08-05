@@ -24,11 +24,13 @@
 nextflow.preview.dsl = 2
 version = '4.1.8.0-2.0'
 
-params.seq = "NO_FILE"
-params.interval_file = "NO_FILE"
+params.tumour_seq = ""
+params.ref_fa = ""
+params.bwa_mem_index_image = ""
+params.input_vcf = ""
+params.output_vcf_basename = ""
+
 params.container_version = ""
-params.ref_genome_fa = "NO_FILE"
-params.known_sites_vcfs = "NO_FILE"
 params.cpus = 1
 params.mem = 1  // in GB
 
@@ -41,6 +43,7 @@ process gatkFilterAlignmentArtifacts {
   input:
     path tumour_seq
     path tumour_seq_idx
+    path ref_fa
     path bwa_mem_index_image
     path input_vcf
     path input_vcf_idx
@@ -56,6 +59,7 @@ process gatkFilterAlignmentArtifacts {
                       -j ${(int) (params.mem * 1000)} \
                       -I ${tumour_seq} \
                       -V ${input_vcf} \
+                      -R ${ref_fa} \
                       --bwa-mem-index-image ${bwa_mem_index_image} \
                       -O ${output_vcf_basename}.vcf.gz
     """

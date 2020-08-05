@@ -25,6 +25,7 @@ nextflow.preview.dsl = 2
 
 
 params.tumour_seq = "data/HCC1143-mini-T/8f879c15-14da-593d-bb76-db866f81ab3a.6.20190927.wgs.grch38.bam"
+params.ref_fa = "reference/tiny-grch38-chr11-530001-537000.fa"
 params.bwa_mem_index_image = "reference/tiny-grch38-chr11-530001-537000.fa.img"
 params.input_vcf = "data/HCC1143-mini-Mutect2-calls/HCC1143.mutect2.vcf.gz"
 params.output_vcf_basename = "aa_filtered_vcf"
@@ -57,6 +58,7 @@ workflow {
     gatkFilterAlignmentArtifacts(
       file(params.tumour_seq),
       Channel.fromPath(getSecondaryFiles(params.tumour_seq, ['bai', 'crai'])),
+      file(params.ref_fa),
       file(params.bwa_mem_index_image),
       file(params.input_vcf),
       Channel.fromPath(getSecondaryFiles(params.input_vcf, ['tbi']), checkIfExists: true),
