@@ -1,0 +1,6 @@
+{
+  "unfiltered_vcf": "data/HCC1143-mini-Mutect2-calls/HCC1143.mutect2.vcf.gz",
+  "ref_genome_fa": "reference/tiny-grch38-chr11-530001-537000.fa",
+  "mutect_stats": "data/HCC1143-mini-Mutect2-calls/HCC1143.mutect2.vcf.gz.stats"
+}
+
