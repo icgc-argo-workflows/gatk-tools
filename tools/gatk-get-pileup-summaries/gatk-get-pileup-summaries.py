@@ -63,11 +63,13 @@ def main():
         output_prefix = seq_name
 
     cmd = (f'gatk --java-options "-Xmx{args.jvm_mem}m" GetPileupSummaries -I {args.input_seq} '
-           f'--interval-set-rule INTERSECTION -L {args.variants} -V {args.variants} '
+           f'--interval-set-rule INTERSECTION -V {args.variants} '
            f'-O {output_prefix}.pileups_metrics.txt') 
 
     if args.intervals:
         cmd = cmd + f' -L {args.intervals}'
+    else:
+        cmd = cmd + f' -L {args.variants}'
 
     if args.ref_fa:
         cmd = cmd + f' -R {args.ref_fa}'
