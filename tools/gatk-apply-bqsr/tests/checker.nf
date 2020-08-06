@@ -24,13 +24,30 @@
 nextflow.preview.dsl = 2
 
 params.seq = "data/SA610149.0.20200122.wgs.grch38.cram"
-params.interval_file = "NO_FILE"
+params.intervals_str = ""
 params.ref_genome_fa = "reference/tiny-grch38-chr11-530001-537000.fa"
 params.recalibration_report = "data/SA610149.0.20200122.wgs.grch38.cram.recal_data.csv"
 params.cpus = 1
 params.mem = 1  // in GB
 
-include {gatkApplyBQSR; getSecondaryFiles} from '../gatk-apply-bqsr'
+include gatkApplyBQSR from '../gatk-apply-bqsr'
+
+
+def getSecondaryFiles(main_file, exts){
+  def secondaryFiles = []
+  for (ext in exts) {
+    if (ext.startsWith("^")) {
+      ext = ext.replace("^", "")
+      parts = main_file.split("\\.").toList()
+      parts.removeLast()
+      secondaryFiles.add((parts + [ext]).join("."))
+    } else {
+      secondaryFiles.add(main_file + '.' + ext)
+    }
+  }
+  return secondaryFiles
+}
+
 
 Channel
   .fromPath(getSecondaryFiles(params.seq, ['crai']), checkIfExists: true)
@@ -49,12 +66,7 @@ workflow {
       file(params.ref_genome_fa),
       ref_genome_fai_ch.collect(),
       file(params.recalibration_report),
-      file(params.interval_file),
+      params.intervals_str,
       'recalibrated_bam'
     )
-
-  publish:
-    gatkApplyBQSR.out.recalibrated_bam to: "output"
-    gatkApplyBQSR.out.recalibrated_bam_bai to: "output"
-    gatkApplyBQSR.out.recalibrated_bam_md5 to: "output"
 }
