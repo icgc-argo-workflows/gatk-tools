@@ -24,7 +24,7 @@
 nextflow.preview.dsl = 2
 
 params.seq = "data/SA610149.0.20200122.wgs.grch38.cram"
-params.interval_file = "NO_FILE"
+params.intervals_str = ""
 params.container_version = ""
 params.ref_genome_fa = "reference/tiny-grch38-chr11-530001-537000.fa"
 params.known_sites_vcfs = "data/*.vcf.gz"
@@ -54,7 +54,7 @@ workflow {
       ref_genome_fai_ch.collect(),
       known_sites_vcfs.collect(),
       known_sites_indices.collect(),
-      file(params.interval_file)
+      params.intervals_str
     )
 
   publish:
