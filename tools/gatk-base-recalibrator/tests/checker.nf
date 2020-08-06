@@ -57,6 +57,4 @@ workflow {
       params.intervals_str
     )
 
-  publish:
-    gatkBaseRecalibrator.out.recalibration_report to: "output"
 }
