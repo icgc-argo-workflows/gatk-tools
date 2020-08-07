@@ -1,6 +1,6 @@
 {
   "seq": "data/SA610149.0.20200122.wgs.grch38.cram",
-  "intervals": [0, "chr11:1+"],
+  "intervals": [32, "chr11:1-536001 chr11:536001-537000"],
   "ref_genome_fa": "reference/tiny-grch38-chr11-530001-537000.fa",
   "known_sites_vcfs": "data/*.vcf.gz"
 }

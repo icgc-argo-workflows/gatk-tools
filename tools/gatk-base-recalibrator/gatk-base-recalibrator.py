@@ -48,8 +48,8 @@ def main():
                         help='Input BAM/CRAM', required=True)
     parser.add_argument('-r', dest='reference', type=str,
                         help='Reference genome sequence fa file', required=True)
-    parser.add_argument('-i', dest='interval_file', type=str,
-                        help='Interval file, eg, bed file, to specify working interval')
+    parser.add_argument('-i', dest='intervals', type=str, nargs="+",
+                        help='Intervals')
     parser.add_argument('-o', dest='recalibration_report_filename', type=str, required=True,
                         help='Output recalibration report filename')
     parser.add_argument('-k', dest='known_snv_indel_sites_vcfs', type=str, required=True,
@@ -70,8 +70,9 @@ def main():
     if args.known_snv_indel_sites_vcfs:
         cmd = f"{cmd} --known-sites " + ' --known-sites '.join(args.known_snv_indel_sites_vcfs)
 
-    if args.interval_file:
-        cmd = f"{cmd} -L {args.interval_file}"
+    if args.intervals:
+        intervals = ' -L '.join(args.intervals)
+        cmd = f"{cmd} -L {intervals}"
 
     run_cmd(cmd)
 
