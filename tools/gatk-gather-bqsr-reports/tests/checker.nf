@@ -41,6 +41,4 @@ workflow {
       params.output_report_filename
     )
 
-  publish:
-    gatkGatherBQSRReports.out.bqsr_report to: "output"
 }
