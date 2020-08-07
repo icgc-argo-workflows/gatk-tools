@@ -11,8 +11,10 @@ def main():
 
     parser.add_argument('-j', '--jvm-mem', dest='jvm_mem', type=int,
                         help='JVM max memory in MB', default=1000)
+    parser.add_argument('-R', dest='reference', type=str,
+                        help='Reference genome', required=True)
     parser.add_argument('--bwa-mem-index-image', dest='bwa_mem_index_image', type=str,
-                        help='Pileup summary from matched normal reads', required=True)
+                        help='BWA-mem index image', required=True)
     parser.add_argument('-I', dest='tumour_seq', type=str,
                         help='BAM/SAM/CRAM file containing tumour reads', required=True)
     parser.add_argument('-V', dest='input_vcf', type=str,
@@ -22,8 +24,9 @@ def main():
 
     args = parser.parse_args()
 
-    cmd = 'gatk --java-options "-Xmx%sm" FilterAlignmentArtifacts --bwa-mem-index-image %s -I %s -V %s -O %s' % (
-            args.jvm_mem, args.bwa_mem_index_image, args.tumour_seq, args.input_vcf, args.output_vcf
+    cmd = 'gatk --java-options "-Xmx%sm" FilterAlignmentArtifacts --bwa-mem-index-image %s -R %s -I %s -V %s -O %s' % (
+            args.jvm_mem, args.bwa_mem_index_image, args.reference,
+            args.tumour_seq, args.input_vcf, args.output_vcf
         )
 
     try:
