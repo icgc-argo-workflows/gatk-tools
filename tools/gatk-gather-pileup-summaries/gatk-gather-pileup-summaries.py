@@ -4,6 +4,7 @@ import os
 import sys
 import subprocess
 import argparse
+import re
 
 def run_cmd(cmd):
     try:
@@ -30,16 +31,15 @@ def main():
                         help='Reference sequence .dict file', required=True)
     parser.add_argument('-I', dest='input_pileup', type=str,
                         help='Input pipeup summary table file(s)', nargs="+", required=True)
-    parser.add_argument('-O', dest='output_name', type=str,
-                        help='Output file name', required=True)
+    
 
     args = parser.parse_args()
 
-    if not args.output_name.endswith('.tsv'):
-        sys.exit('Usage: -O output file name must end with ".tsv"')
+    basename = re.sub(r'^\d{4}\-', '', os.path.basename(args.input_pileup[0]))
+    basename = re.sub(r'\.pileups_metrics\.txt$', '', basename)
 
-    cmd = 'gatk --java-options "-Xmx%sm" GatherPileupSummaries --sequence-dictionary %s -O %s' % (
-            args.jvm_mem, args.ref_dict, args.output_name
+    cmd = 'gatk --java-options "-Xmx%sm" GatherPileupSummaries --sequence-dictionary %s -O %s.pileups_metrics.tsv' % (
+            args.jvm_mem, args.ref_dict, basename
         )
 
     for i in args.input_pileup:

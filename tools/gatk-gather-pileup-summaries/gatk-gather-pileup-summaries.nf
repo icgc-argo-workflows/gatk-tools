@@ -23,11 +23,10 @@
  */
 
 nextflow.preview.dsl = 2
-version = '4.1.8.0-1.0'
+version = '4.1.8.0-2.0'
 
 params.ref_genome_dict = "NO_FILE"
 params.input_pileup = "NO_FILE"
-params.output_name = "merged_pileup.tsv"
 
 params.container_version = ""
 params.cpus = 1
@@ -45,14 +44,13 @@ process gatkGatherPileupSummaries {
 
 
   output:
-    path "${params.output_name}", emit: merged_pileup
+    path "*.pileups_metrics.tsv", emit: merged_pileups_metrics
 
   script:
 
     """
     gatk-gather-pileup-summaries.py -j ${(int) (params.mem * 1000)} \
                       -D ${ref_genome_dict} \
-                      -I ${input_pileup} \
-                      -O ${params.output_name}
+                      -I ${input_pileup} 
     """
 }

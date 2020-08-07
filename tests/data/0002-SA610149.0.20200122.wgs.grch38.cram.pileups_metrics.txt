@@ -1,0 +1,2 @@
+#<METADATA>SAMPLE=HCC1143_BAM_INPUT
+contig	position	ref_count	alt_count	other_alt_count	allele_frequency

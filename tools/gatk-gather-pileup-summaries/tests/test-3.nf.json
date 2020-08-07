@@ -1,8 +1,7 @@
 {
   "input_pileup": [
-    "data/0001-scattered.SA610149.0.20200122.wgs.grch38.cram.pileups.table",
-    "data/0002-scattered.SA610149.0.20200122.wgs.grch38.cram.pileups.table"
+    "data/0001-SA610149.0.20200122.wgs.grch38.cram.pileups_metrics.txt",
+    "data/0002-SA610149.0.20200122.wgs.grch38.cram.pileups_metrics.txt"
   ],
-  "ref_genome_dict": "reference/tiny-grch38-chr11-530001-537000.dict",
-  "output_name": "SA610149_merged_pileup.tsv"
+  "ref_genome_dict": "reference/tiny-grch38-chr11-530001-537000.dict"
 }
