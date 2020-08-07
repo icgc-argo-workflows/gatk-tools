@@ -8,14 +8,13 @@ unfiltered_vcf:
 mutect_stats:  # type "File", stats file produced by metect2
     class: File
     path: data/HCC1143-mini-Mutect2-calls/HCC1143.mutect2.vcf.gz.stats  # actual .stats file to be prepared
-#contamination_table:  # type "File" (optional)
-#    class: File
-#    path: a/file/path
-#segmentation_table:  # type "File" (optional)
-#    class: File
-#    path: a/file/path
+contamination_table:  # type "File" (optional)
+   class: File
+   path: data/tumour_pileups.table.tumour.contamination_metrics
+segmentation_table:  # type "File" (optional)
+   class: File
+   path: data/tumour_pileups.table.tumour.segmentation_metrics
 artifact_priors_tar_gz:  # array of type "File" (optional)
   - class: File
     path: data/HCC1143-mini-T/HCC1143.artifact-priors.tar.gz
-filtering_stats_output: filtering.stats.txt
-output_vcf: filtered.vcf.gz
+

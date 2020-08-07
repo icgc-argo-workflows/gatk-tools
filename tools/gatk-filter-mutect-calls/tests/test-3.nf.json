@@ -1,0 +1,10 @@
+{
+  "unfiltered_vcf": "data/HCC1143-mini-Mutect2-calls/HCC1143.mutect2.vcf.gz",
+  "ref_genome_fa": "reference/tiny-grch38-chr11-530001-537000.fa",
+  "mutect_stats": "data/HCC1143-mini-Mutect2-calls/HCC1143.mutect2.vcf.gz.stats",
+  "contamination_table": "data/tumour_pileups.table.tumour.contamination_metrics",
+  "segmentation_table": "data/tumour_pileups.table.tumour.segmentation_metrics",
+  "artifact_priors_tar_gz": [
+      "data/HCC1143-mini-T/HCC1143.artifact-priors.tar.gz"
+  ]
+}
