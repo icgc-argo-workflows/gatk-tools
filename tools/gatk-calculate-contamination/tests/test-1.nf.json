@@ -1,0 +1,4 @@
+{
+  "tumour_pileups": "data/normal_pileups.table",
+  "tumour_normal": "normal"
+}
