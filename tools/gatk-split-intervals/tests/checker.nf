@@ -43,7 +43,4 @@ workflow {
       ref_genome_ch.collect(), \
       file(params.intervals)
     )
-
-  publish:
-    gatkSplitIntervals.out.interval_files to: 'outdir', overwrite: true
 }

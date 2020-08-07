@@ -44,7 +44,4 @@ workflow {
       file(params.ref_genome_dict),
       input_pileup_ch.collect()
     )
-
-  publish:
-    gatkGatherPileupSummaries.out.merged_pileups_metrics to: "output"
 }

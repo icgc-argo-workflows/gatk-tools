@@ -64,11 +64,4 @@ workflow {
       germline_resource_idx.collect(),
       file(params.interval_file)
     )
-
-  publish:
-    gatkMutect2.out.output_vcf to: "output"
-    gatkMutect2.out.mutect_stats to: "output"
-    gatkMutect2.out.bam_output to: "output"
-    gatkMutect2.out.bam_output_bai to: "output"
-    gatkMutect2.out.f1r2_counts to: "output"
 }
