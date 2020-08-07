@@ -24,7 +24,7 @@
 nextflow.preview.dsl = 2
 
 params.seq = "data/SA610149.0.20200122.wgs.grch38.cram"
-params.intervals_str = ""
+params.intervals = []
 params.ref_genome_fa = "reference/tiny-grch38-chr11-530001-537000.fa"
 params.recalibration_report = "data/SA610149.0.20200122.wgs.grch38.cram.recal_data.csv"
 params.cpus = 1
@@ -66,7 +66,7 @@ workflow {
       file(params.ref_genome_fa),
       ref_genome_fai_ch.collect(),
       file(params.recalibration_report),
-      params.intervals_str,
+      params.intervals,
       'recalibrated_bam'
     )
 }
