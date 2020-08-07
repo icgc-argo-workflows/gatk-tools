@@ -1,0 +1,7 @@
+{
+  "input_stats": [
+    "data/HCC1143-mini-Mutect2-calls/HCC1143.mutect2.vcf.gz.stats",
+    "data/HCC1143-mini-Mutect2-calls/HCC1143.mutect2.copy.vcf.gz.stats"
+  ],
+  "output_basename": "merged"
+}
