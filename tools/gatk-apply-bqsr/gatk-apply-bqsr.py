@@ -54,8 +54,8 @@ def main():
                         help='Basename of the output recalibrated BAM')
     parser.add_argument('-k', dest='compression_level', type=int,
                         help='Compression level of output BAM', default=5)
-    parser.add_argument('-i', dest='interval_file', type=str,
-                        help='Interval file, eg, bed file, to specify working interval')
+    parser.add_argument('-i', dest='intervals', type=str, nargs="+",
+                        help='Intervals str, separated by space')
 
     args = parser.parse_args()
 
@@ -75,8 +75,9 @@ def main():
             --static-quantized-quals 30 \
             -O {args.output_bam_basename}.bam """
 
-    if args.interval_file:
-        cmd = f"{cmd} -L {args.interval_file}"
+    if args.intervals:
+        intervals = ' -L '.join(args.intervals)
+        cmd = f"{cmd} -L {intervals}"
 
     run_cmd(cmd)
 

@@ -2,5 +2,5 @@
   "seq": "data/SA610149.0.20200122.wgs.grch38.cram",
   "ref_genome_fa": "reference/tiny-grch38-chr11-530001-537000.fa",
   "recalibration_report": "data/SA610149.0.20200122.wgs.grch38.cram.recal_data.csv",
-  "intervals": [0, "chr11:1+"]
+  "intervals": [23, "chr11:530001-537000 unmapped"]
 }
