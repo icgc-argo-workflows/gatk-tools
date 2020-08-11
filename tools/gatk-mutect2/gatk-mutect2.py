@@ -47,6 +47,9 @@ def main():
             args.jvm_mem, args.ref_fa, output_prefix, args.output_vcf, args.tumour_reads
         )
 
+    if args.germline_resource:
+        cmd = cmd + ' --germline-resource %s' % args.germline_resource
+
     if args.normal_reads:
         p = subprocess.run(['samtools view -H %s | grep "^@RG" | tr \'\t\' \'\n\' | grep "^SM" | sort -u' % args.normal_reads],
                             stdout=subprocess.PIPE, stderr=subprocess.PIPE, shell=True)
