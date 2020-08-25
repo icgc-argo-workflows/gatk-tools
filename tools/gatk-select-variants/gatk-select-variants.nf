@@ -46,17 +46,17 @@ process gatkSelectVariants {
     val output_basename
 
   output:
-    tuple path "${output_basename}.vcf.gz", path "${output_basename}.vcf.gz.tbi", emit: output
+    tuple path("${output_basename}.vcf.gz"), path("${output_basename}.vcf.gz.tbi"), emit: output
 
   script:
     variant_types = ["INDEL", "SNP", "MIXED", "MNP", "SYMBOLIC", "NO_VARIATION"]
-    if (!select_type_to_include and !select_type_to_exclude) {
+    if (!select_type_to_include && !select_type_to_exclude) {
       exit 1, "Please specify either sselect_type_to_include or select_type_to_exclude"
-    } else if (select_type_to_include and select_type_to_exclude){
+    } else if (select_type_to_include && select_type_to_exclude){
       exit 1, "Please specify either select_type_to_include or select_type_to_exclude"
-    } else if ( !variant_types.contains(select_type_to_include) ) {
+    } else if (select_type_to_include && !variant_types.contains(select_type_to_include)) {
       exit 1, "select_type_to_include must be one of: ${variant_types}"
-    } else if ( !variant_types.contains(select_type_to_exclude) ) {
+    } else if (select_type_to_exclude && !variant_types.contains(select_type_to_exclude)) {
       exit 1, "select_type_to_exclude must be one of: ${variant_types}"
     }
 

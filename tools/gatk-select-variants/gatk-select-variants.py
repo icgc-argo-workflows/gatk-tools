@@ -47,9 +47,9 @@ def main():
     parser.add_argument('-v', dest='input_vcf', type=str,
                         help='Input VCF', required=True)
     parser.add_argument('-i', dest='select_type_to_include', type=str,
-                        help='Type of variant to include', required=True)
+                        help='Type of variant to include')
     parser.add_argument('-x', dest='select_type_to_exclude', type=str,
-                        help='Type of variant to include', required=True)
+                        help='Type of variant to include')
     parser.add_argument('-o', dest='output_vcf_filename', type=str, required=True,
                         help='Output VCF filename')
 
