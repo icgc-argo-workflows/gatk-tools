@@ -1,0 +1,5 @@
+{
+  "input_vcf": "data/tiny-chr11-exac_common_3.hg38.vcf.gz",
+  "select_type_to_include": "INDEL",
+  "output_basename": "only_indel_variants"
+}
