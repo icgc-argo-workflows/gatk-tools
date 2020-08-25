@@ -37,6 +37,7 @@ workflow {
   main:
     gatkSelectVariants(
       file(params.input_vcf),
+      file(params.input_vcf + '.tbi'),
       params.select_type_to_include,
       params.select_type_to_exclude,
       params.output_basename

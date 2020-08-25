@@ -41,6 +41,7 @@ process gatkSelectVariants {
 
   input:
     path input_vcf
+    path input_vcf_tbi
     val select_type_to_include
     val select_type_to_exclude
     val output_basename
@@ -60,13 +61,16 @@ process gatkSelectVariants {
       exit 1, "select_type_to_exclude must be one of: ${variant_types}"
     }
 
+    arg_select = "-i ${select_type_to_include}"
+    if (select_type_to_exclude) {
+        arg_select = "-x ${select_type_to_exclude}"
+    }
+
     """
     gatk-select-variants.py \
                       -m ${(int) (params.mem * 1000)} \
                       -v ${input_vcf} \
-                      -i ${select_type_to_include} \
-                      -x ${select_type_to_exclude} \
-                      -o ${output_basename}.vcf.gz
+                      -o ${output_basename}.vcf.gz ${arg_select}
 
     """
 }
