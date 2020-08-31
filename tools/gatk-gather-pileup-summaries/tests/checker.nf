@@ -22,7 +22,7 @@
  *        Linda Xiang  <linda.xiang@oicr.on.ca>
  */
 
-nextflow.preview.dsl = 2
+nextflow.enable.dsl = 2
 
 params.ref_genome_dict = "reference/tiny-grch38-chr11-530001-537000.dict"
 params.input_pileup = "NO_FILE"
@@ -32,7 +32,7 @@ params.cpus = 1
 params.mem = 1  // in GB
 
 
-include gatkGatherPileupSummaries from '../gatk-gather-pileup-summaries'
+include { gatkGatherPileupSummaries } from '../gatk-gather-pileup-summaries'
 
 Channel
   .fromPath(params.input_pileup, checkIfExists: true)
