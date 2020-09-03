@@ -23,7 +23,7 @@
  */
 
 nextflow.enable.dsl = 2
-version = '4.1.8.0-2.1'
+version = '4.1.8.0-3.0'
 
 params.seq_pileups = "NO_FILE"
 params.matched_pileups = "NO_FILE"
