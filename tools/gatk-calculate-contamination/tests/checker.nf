@@ -22,11 +22,10 @@
  *        Linda Xiang  <linda.xiang@oicr.on.ca>
  */
 
-nextflow.preview.dsl = 2
+nextflow.enable.dsl = 2
 
-params.tumour_pileups = "NO_FILE"
-params.normal_pileups = "NO_FILE"
-params.tumour_normal = ""
+params.seq_pileups = "NO_FILE"
+params.matched_pileups = "NO_FILE"
 
 params.container_version = ""
 params.cpus = 1
@@ -38,9 +37,8 @@ include { gatkCalculateContamination } from '../gatk-calculate-contamination'
 workflow {
   main:
     gatkCalculateContamination(
-      file(params.tumour_pileups),
-      file(params.normal_pileups),
-      params.tumour_normal
+      Channel.fromPath(params.seq_pileups),
+      Channel.fromPath(params.matched_pileups)
     )
 
   emit:
