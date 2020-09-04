@@ -21,13 +21,14 @@
  * author Junjun Zhang <junjun.zhang@oicr.on.ca>
  */
 
-nextflow.preview.dsl = 2
+nextflow.enable.dsl = 2
 
 params.tumour_reads = "NO_FILE1"
 params.normal_reads = "NO_FILE2"
 params.interval_file = "NO_FILE3"
 params.ref_genome_fa = "NO_FILE4"
 params.germline_resource = "NO_FILE5"
+params.panel_of_normals = "NO_FILE6"
 
 params.container_version = ""
 params.cpus = 1
@@ -51,6 +52,10 @@ germline_resource = Channel.fromPath(params.germline_resource)
 
 germline_resource_idx = germline_resource.flatMap { v -> getSecondaryFiles(v, ['tbi']) }
 
+panel_of_normals = Channel.fromPath(params.panel_of_normals)
+
+panel_of_normals_idx = panel_of_normals.flatMap { v -> getSecondaryFiles(v, ['tbi']) }
+
 workflow {
   main:
     gatkMutect2(
@@ -62,6 +67,8 @@ workflow {
       ref_genome_secondary_file.collect(),
       germline_resource.collect(),
       germline_resource_idx.collect(),
-      file(params.interval_file)
+      panel_of_normals.collect(),
+      panel_of_normals_idx.collect(),
+      Channel.fromPath(params.interval_file).flatten()
     )
 }
