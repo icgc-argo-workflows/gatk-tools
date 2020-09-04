@@ -1,8 +1,7 @@
 jvm_mem: 1000
-tumour_pileups:
+seq_pileups:
   class: File
   path: data/HCC1143-mini-T/pileups.table
-normal_pileups:
+matched_pileups:
   class: File
   path: data/HCC1143_BL-mini-N/pileups.table
-tumour_normal: tumour

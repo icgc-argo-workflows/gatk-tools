@@ -1,4 +1,3 @@
 {
-  "tumour_pileups": "data/normal_pileups.table",
-  "tumour_normal": "normal"
+  "seq_pileups": "data/normal_pileups.table"
 }

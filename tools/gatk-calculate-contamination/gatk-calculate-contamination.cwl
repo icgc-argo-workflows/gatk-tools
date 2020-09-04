@@ -5,7 +5,7 @@ id: gatk-calculate-contamination
 requirements:
 - class: ShellCommandRequirement
 - class: DockerRequirement
-  dockerPull: 'quay.io/icgc-argo/gatk-calculate-contamination:gatk-calculate-contamination.4.1.8.0-2.0'
+  dockerPull: 'quay.io/icgc-argo/gatk-calculate-contamination:gatk-calculate-contamination.4.1.8.0-3.0'
 
 baseCommand: [ 'gatk-calculate-contamination.py' ]
 
@@ -14,18 +14,14 @@ inputs:
     type: int?
     inputBinding:
       prefix: -j
-  tumour_pileups:
+  seq_pileups:
     type: File
     inputBinding:
       prefix: -I
-  normal_pileups:
+  matched_pileups:
     type: File?
     inputBinding:
       prefix: -matched
-  tumour_normal:
-    type: string?
-    inputBinding:
-      prefix: -s
 
 outputs:
   segmentation_table:
