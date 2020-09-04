@@ -35,7 +35,7 @@ def main():
 
     args = parser.parse_args()
 
-    basename = hashlib.md5('\t'.join(args.input_pileup).encode('utf-8')).hexdigest()
+    basename = hashlib.md5('\t'.join(sorted(args.input_pileup)).encode('utf-8')).hexdigest()
 
     cmd = 'gatk --java-options "-Xmx%sm" GatherPileupSummaries --sequence-dictionary %s -O %s.pileups_metrics.tsv' % (
             args.jvm_mem, args.ref_dict, basename
