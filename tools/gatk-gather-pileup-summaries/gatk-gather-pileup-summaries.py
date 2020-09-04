@@ -1,10 +1,10 @@
 #!/usr/bin/env python3
 
-import os
 import sys
 import subprocess
 import argparse
-import re
+import hashlib
+
 
 def run_cmd(cmd):
     try:
@@ -22,6 +22,7 @@ def run_cmd(cmd):
 
     return p  # in case the caller of this funtion needs p.stdout, p.stderr etc
 
+
 def main():
     parser = argparse.ArgumentParser(description='GATK GatherPileupSummaries')
 
@@ -31,12 +32,10 @@ def main():
                         help='Reference sequence .dict file', required=True)
     parser.add_argument('-I', dest='input_pileup', type=str,
                         help='Input pipeup summary table file(s)', nargs="+", required=True)
-    
 
     args = parser.parse_args()
 
-    basename = re.sub(r'^\d{4}\-', '', os.path.basename(args.input_pileup[0]))
-    basename = re.sub(r'\.pileups_metrics\.txt$', '', basename)
+    basename = hashlib.md5('\t'.join(sorted(args.input_pileup)).encode('utf-8')).hexdigest()
 
     cmd = 'gatk --java-options "-Xmx%sm" GatherPileupSummaries --sequence-dictionary %s -O %s.pileups_metrics.tsv' % (
             args.jvm_mem, args.ref_dict, basename
