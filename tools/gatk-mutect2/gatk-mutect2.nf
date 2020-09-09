@@ -57,7 +57,7 @@ process gatkMutect2 {
   container "quay.io/icgc-argo/gatk-mutect2:gatk-mutect2.${params.container_version ?: version}"
   cpus params.cpus
   memory "${params.mem} GB"
-  publishDir "output/mutect2"
+  //publishDir "output/mutect2"
 
   input:
     path tumour_reads
