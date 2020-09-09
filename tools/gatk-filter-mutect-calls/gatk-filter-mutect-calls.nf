@@ -23,7 +23,7 @@
  */
 
 nextflow.preview.dsl = 2
-version = '4.1.8.0-2.0'
+version = '4.1.8.0-2.1'
 
 params.unfiltered_vcf = "NO_FILE"
 params.ref_genome_fa = "NO_FILE"
@@ -36,6 +36,7 @@ params.m2_extra_filtering_args = ""
 params.container_version = ""
 params.cpus = 1
 params.mem = 1  // in GB
+params.publish_dir = ""
 
 
 def getSecondaryFiles(main_file, exts){
@@ -57,7 +58,7 @@ process gatkFilterMutectCalls {
   container "quay.io/icgc-argo/gatk-filter-mutect-calls:gatk-filter-mutect-calls.${params.container_version ?: version}"
   cpus params.cpus
   memory "${params.mem} GB"
-  publishDir "output/filterMutectCalls"
+  publishDir "${params.publish_dir}/${task.process.replaceAll(':', '_')}", enabled: "${params.publish_dir ? true : ''}"
 
   input:
     path unfiltered_vcf
