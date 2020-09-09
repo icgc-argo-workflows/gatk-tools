@@ -23,12 +23,12 @@
  */
 
 nextflow.preview.dsl = 2
-version = '4.1.8.0-2.0'
+version = '4.1.8.0-2.1'
 
-params.seq = "NO_FILE"
-params.ref_genome_fa = "NO_FILE"
-params.variants_resources = "NO_FILE"
-params.interval_file = "NO_FILE"
+params.seq = "NO_FILE1"
+params.ref_genome_fa = "NO_FILE2"
+params.variants_resources = "NO_FILE3"
+params.interval_file = "NO_FILE4"
 
 params.container_version = ""
 params.cpus = 1
@@ -54,7 +54,7 @@ process gatkGetPileupSummaries {
   container "quay.io/icgc-argo/gatk-get-pileup-summaries:gatk-get-pileup-summaries.${params.container_version ?: version}"
   cpus params.cpus
   memory "${params.mem} GB"
-  publishDir "output/getPileupSummaries"
+  //publishDir "output/getPileupSummaries"
 
   input:
     path seq
@@ -69,8 +69,8 @@ process gatkGetPileupSummaries {
     path "*.pileups_metrics.txt", emit: pileups_metrics
 
   script:
-    arg_ref_genome_fa = ref_genome_fa.name == 'NO_FILE' ? "" : "-R ${ref_genome_fa}"
-    arg_interval_file = interval_file.name == 'NO_FILE' ? "" : "-L ${interval_file}"
+    arg_ref_genome_fa = ref_genome_fa.name.startsWith('NO_FILE') ? "" : "-R ${ref_genome_fa}"
+    arg_interval_file = interval_file.name.startsWith('NO_FILE') ? "" : "-L ${interval_file}"
     """
     gatk-get-pileup-summaries.py -I ${seq} \
                       -V ${variants_resources} \
