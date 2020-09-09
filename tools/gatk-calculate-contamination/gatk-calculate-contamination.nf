@@ -23,7 +23,7 @@
  */
 
 nextflow.enable.dsl = 2
-version = '4.1.8.0-3.0'
+version = '4.1.8.0-3.1'
 
 params.seq_pileups = "NO_FILE"
 params.matched_pileups = "NO_FILE"
@@ -37,7 +37,7 @@ process gatkCalculateContamination {
   container "quay.io/icgc-argo/gatk-calculate-contamination:gatk-calculate-contamination.${params.container_version ?: version}"
   cpus params.cpus
   memory "${params.mem} GB"
-  publishDir "output/calculateContamination"
+  //publishDir "output/calculateContamination"
 
   input:
     path seq_pileups
