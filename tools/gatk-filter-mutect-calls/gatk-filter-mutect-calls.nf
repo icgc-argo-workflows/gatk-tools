@@ -23,7 +23,7 @@
  */
 
 nextflow.preview.dsl = 2
-version = '4.1.8.0-2.1'
+version = '4.1.8.0-2.2'
 
 params.unfiltered_vcf = "NO_FILE"
 params.ref_genome_fa = "NO_FILE"

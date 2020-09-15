@@ -47,7 +47,7 @@ def main():
     basename = re.sub(r'\.vcf\.gz$', '', os.path.basename(args.unfiltered_vcf))
 
     cmd = 'gatk --java-options "-Xmx%sm" FilterMutectCalls -V %s -R %s -O %s --filtering-stats %s --stats %s' % (
-            args.jvm_mem, args.unfiltered_vcf, args.ref_fa, basename+'.filtered.vcf.gz', basename+'.filtering-stats', args.mutect_stats
+            args.jvm_mem, args.unfiltered_vcf, args.ref_fa, basename+'.filtered.vcf.gz', 'filter-mutect-calls.filtering-stats', args.mutect_stats
         )
 
     if args.contamination_table:
