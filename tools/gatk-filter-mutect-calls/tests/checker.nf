@@ -22,7 +22,7 @@
  *         Linda Xiang <linda.xiang@oicr.on.ca>
  */
 
-nextflow.preview.dsl = 2
+nextflow.enable.dsl = 2
 
 params.unfiltered_vcf = "NO_FILE"
 params.ref_genome_fa = "NO_FILE"
