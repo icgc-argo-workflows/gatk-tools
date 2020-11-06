@@ -1,4 +1,4 @@
-FROM quay.io/icgc-argo/gatk-tools:base-docker.4.1.4.1
+FROM quay.io/icgc-argo/gatk-tools:base-docker.4.1.8.0
 
 COPY *.py /tools/
 

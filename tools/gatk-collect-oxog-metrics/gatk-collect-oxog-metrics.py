@@ -7,7 +7,7 @@ import argparse
 import csv
 import re
 import json
-from math import log10
+from math import log10, isnan
 import uuid
 
 def run_cmd(cmd):
@@ -106,7 +106,7 @@ def main():
     with open("%s.extra_info.json" % metrics_file_prefix, 'w') as f:
         f.write(json.dumps({
                 "tool": tool_ver,
-                "oxoQ_score": float('%.4f' % oxoQ_score) if oxoQ_score is not None else None,
+                "oxoQ_score": float('%.4f' % oxoQ_score) if not isnan(oxoQ_score) else None,
                 "context": "CCG"
             }, indent=2))
 
