@@ -96,6 +96,9 @@ def main():
     else:
         sys.exit("Unsupported input file format!")
 
+    #set -MIN_INS=0 -MAX_INS=0 instead of default to allow unpaired reads
+    cmd = cmd + ' --MINIMUM_INSERT_SIZE 0 --MAXIMUM_INSERT_SIZE 0'
+
     run_cmd(cmd)
 
     version_cmd = 'gatk CollectOxoGMetrics --version | grep GATK'

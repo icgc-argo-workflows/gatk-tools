@@ -1,0 +1,6 @@
+{
+    "seq": "data/grch38-aligned.merged-se.bam",
+    "seq_idx": "data/grch38-aligned.merged-se.bam.bai",
+    "interval_file": "data/0000-scattered.interval_list",
+    "ref_genome_fa": "reference/tiny-grch38-chr11-530001-537000.fa"
+}
