@@ -28,7 +28,7 @@ params.seq = ""
 params.seq_idx = ""
 params.ref_genome_fa = ""
 params.interval_file = "NO_FILE"
-params.unpaired = false
+params.paired = true
 
 
 include { gatkCollectOxogMetrics; getOxogSecondaryFiles; gatherOxogMetrics } \
@@ -46,6 +46,7 @@ workflow {
       file(params.ref_genome_fa),
       ref_genome_ch.collect(),
       file(params.interval_file),
+      params.paired,
       true
     )
 

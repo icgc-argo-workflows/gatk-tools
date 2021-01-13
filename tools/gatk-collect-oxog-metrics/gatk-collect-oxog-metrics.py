@@ -65,7 +65,7 @@ def main():
                         help='Reference genome sequence fa file', required=True)
     parser.add_argument('-i', dest='interval_file', type=str,
                         help='Interval file, eg, bed file, to specify working interval')
-    parser.add_argument('-u', dest='unpaired', action='store_true')
+    parser.add_argument('-p', dest='paired', action='store_true')
     
 
 
@@ -98,7 +98,7 @@ def main():
     else:
         sys.exit("Unsupported input file format!")
 
-    if args.unpaired:
+    if not args.paired:
         #set -MIN_INS=0 -MAX_INS=0 instead of default to allow unpaired reads
         cmd = cmd + ' --MINIMUM_INSERT_SIZE 0 --MAXIMUM_INSERT_SIZE 0'
 
