@@ -28,6 +28,7 @@ params.seq = ""
 params.seq_idx = ""
 params.ref_genome_fa = ""
 params.interval_file = "NO_FILE"
+params.unpaired = false
 
 
 include { gatkCollectOxogMetrics; getOxogSecondaryFiles; gatherOxogMetrics } \
