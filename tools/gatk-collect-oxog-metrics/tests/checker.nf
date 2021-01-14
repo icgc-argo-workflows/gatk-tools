@@ -29,24 +29,30 @@ params.seq_idx = ""
 params.ref_genome_fa = ""
 params.interval_file = "NO_FILE"
 params.paired = true
+params.analysis_metadata = "NO_FILE"
 
-
-include { gatkCollectOxogMetrics; getOxogSecondaryFiles; gatherOxogMetrics } \
+include { gatkCollectOxogMetrics; getOxogSecondaryFiles; getPairedEndFlag; gatherOxogMetrics } \
   from '../gatk-collect-oxog-metrics.nf' params(params)
 
 Channel
   .fromPath(getOxogSecondaryFiles(params.ref_genome_fa), checkIfExists: true)
   .set { ref_genome_ch }
 
+
 workflow {
   main:
+    def paired = params.paired
+    if (params.analysis_metadata != "NO_FILE") {
+      paired = getPairedEndFlag(params.analysis_metadata)
+    }
+
     gatkCollectOxogMetrics(
       file(params.seq),
       file(params.seq_idx),
       file(params.ref_genome_fa),
       ref_genome_ch.collect(),
       file(params.interval_file),
-      params.paired,
+      paired,
       true
     )
 

@@ -42,6 +42,22 @@ def getOxogSecondaryFiles(main_file){  //this is kind of like CWL's secondary fi
   return all_files
 }
 
+import groovy.json.JsonSlurper
+
+def getPairedEndFlag(metadata){  
+  def jsonSlurper = new JsonSlurper()
+  def metadataJSON = new File(metadata).text
+  def array = jsonSlurper.parseText(metadataJSON).read_groups
+  def paired = true
+  for(def member : array) {
+    if(!member.is_paired_end) {
+    paired = false
+    break
+    }
+  }
+  return paired
+}
+
 process gatkCollectOxogMetrics {
   container "quay.io/icgc-argo/gatk-collect-oxog-metrics:gatk-collect-oxog-metrics.${params.container_version ?: version}"
   cpus params.cpus
