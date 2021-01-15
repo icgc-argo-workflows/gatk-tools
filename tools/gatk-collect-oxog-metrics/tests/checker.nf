@@ -27,9 +27,9 @@ nextflow.enable.dsl=2
 params.seq = ""
 params.seq_idx = ""
 params.ref_genome_fa = ""
-params.interval_file = "NO_FILE"
+params.interval_file = "NO_FILE1"
 params.paired = true
-params.analysis_metadata = "NO_FILE"
+params.analysis_metadata = "NO_FILE2"
 
 include { gatkCollectOxogMetrics; getOxogSecondaryFiles; gatherOxogMetrics } \
   from '../gatk-collect-oxog-metrics.nf' params(params)

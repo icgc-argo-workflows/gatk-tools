@@ -27,8 +27,8 @@ version = '4.1.8.0-3.0'
 
 params.seq = ""
 params.seq_idx = ""
-params.interval_file = "NO_FILE"
-params.analysis_metadata = "NO_FILE"
+params.interval_file = "NO_FILE1"
+params.analysis_metadata = "NO_FILE2"
 params.container_version = ""
 params.ref_genome_fa = ""
 params.paired = true
@@ -63,8 +63,8 @@ process gatkCollectOxogMetrics {
     path "*.oxog_metrics.tgz", emit: oxog_metrics
 
   script:
-    arg_interval_file = interval_file.name == 'NO_FILE' ? "" : "-i ${interval_file}"
-    arg_analysis_metadata = analysis_metadata.name == 'NO_FILE' ? "" : "-j ${analysis_metadata}"
+    arg_interval_file = interval_file.name == 'NO_FILE1' ? "" : "-i ${interval_file}"
+    arg_analysis_metadata = analysis_metadata.name == 'NO_FILE2' ? "" : "-j ${analysis_metadata}"
     arg_paired = paired ? "-p" : ""
 
     """
