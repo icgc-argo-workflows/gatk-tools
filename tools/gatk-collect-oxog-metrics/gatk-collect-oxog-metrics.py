@@ -65,6 +65,8 @@ def main():
                         help='Reference genome sequence fa file', required=True)
     parser.add_argument('-i', dest='interval_file', type=str,
                         help='Interval file, eg, bed file, to specify working interval')
+    parser.add_argument('-j', dest='analysis_metadata', type=str,
+                        help='song analysis metadata file')
     parser.add_argument('-p', dest='paired', action='store_true')
     
 
@@ -98,7 +100,22 @@ def main():
     else:
         sys.exit("Unsupported input file format!")
 
-    if not args.paired:
+    if args.analysis_metadata:
+        paired = True        
+        with open(args.analysis_metadata, 'r') as f:
+            analysis_metadata = json.load(f) 
+        for rg in analysis_metadata.get('read_groups'):
+            if not rg.get('is_paired_end'):
+                paired = False
+                break
+    
+    elif args.paired:
+        paired = True
+    else:
+        paired = False
+    
+
+    if not paired:
         #set -MIN_INS=0 -MAX_INS=0 instead of default to allow unpaired reads
         cmd = cmd + ' --MINIMUM_INSERT_SIZE 0 --MAXIMUM_INSERT_SIZE 0'
 

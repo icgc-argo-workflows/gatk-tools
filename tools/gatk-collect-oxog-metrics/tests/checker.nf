@@ -31,7 +31,7 @@ params.interval_file = "NO_FILE"
 params.paired = true
 params.analysis_metadata = "NO_FILE"
 
-include { gatkCollectOxogMetrics; getOxogSecondaryFiles; getPairedEndFlag; gatherOxogMetrics } \
+include { gatkCollectOxogMetrics; getOxogSecondaryFiles; gatherOxogMetrics } \
   from '../gatk-collect-oxog-metrics.nf' params(params)
 
 Channel
@@ -41,18 +41,15 @@ Channel
 
 workflow {
   main:
-    def paired = params.paired
-    if (params.analysis_metadata != "NO_FILE") {
-      paired = getPairedEndFlag(params.analysis_metadata)
-    }
-
+    
     gatkCollectOxogMetrics(
       file(params.seq),
       file(params.seq_idx),
       file(params.ref_genome_fa),
       ref_genome_ch.collect(),
       file(params.interval_file),
-      paired,
+      file(params.analysis_metadata),
+      params.paired,
       true
     )
 

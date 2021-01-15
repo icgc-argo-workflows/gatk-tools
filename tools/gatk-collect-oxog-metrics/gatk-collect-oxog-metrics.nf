@@ -28,6 +28,7 @@ version = '4.1.8.0-3.0'
 params.seq = ""
 params.seq_idx = ""
 params.interval_file = "NO_FILE"
+params.analysis_metadata = "NO_FILE"
 params.container_version = ""
 params.ref_genome_fa = ""
 params.paired = true
@@ -42,22 +43,6 @@ def getOxogSecondaryFiles(main_file){  //this is kind of like CWL's secondary fi
   return all_files
 }
 
-import groovy.json.JsonSlurper
-
-def getPairedEndFlag(metadata){  
-  def jsonSlurper = new JsonSlurper()
-  def metadataJSON = new File(metadata).text
-  def array = jsonSlurper.parseText(metadataJSON).read_groups
-  def paired = true
-  for(def member : array) {
-    if(!member.is_paired_end) {
-    paired = false
-    break
-    }
-  }
-  return paired
-}
-
 process gatkCollectOxogMetrics {
   container "quay.io/icgc-argo/gatk-collect-oxog-metrics:gatk-collect-oxog-metrics.${params.container_version ?: version}"
   cpus params.cpus
@@ -70,6 +55,7 @@ process gatkCollectOxogMetrics {
     path ref_genome_fa
     path ref_genome_secondary_file
     path interval_file
+    path analysis_metadata
     val paired
     val dependencies
 
@@ -78,11 +64,13 @@ process gatkCollectOxogMetrics {
 
   script:
     arg_interval_file = interval_file.name == 'NO_FILE' ? "" : "-i ${interval_file}"
+    arg_analysis_metadata = analysis_metadata.name == 'NO_FILE' ? "" : "-j ${analysis_metadata}"
     arg_paired = paired ? "-p" : ""
+
     """
     gatk-collect-oxog-metrics.py -s ${seq} \
                       -r ${ref_genome_fa} \
-                      -m ${(int) (params.mem * 1000)} ${arg_interval_file} ${arg_paired}
+                      -m ${(int) (params.mem * 1000)} ${arg_interval_file} ${arg_analysis_metadata} ${arg_paired} 
     """
 }
 
