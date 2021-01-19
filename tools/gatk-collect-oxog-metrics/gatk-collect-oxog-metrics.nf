@@ -30,7 +30,7 @@ params.seq_idx = ""
 params.interval_file = "NO_FILE"
 params.container_version = ""
 params.ref_genome_fa = ""
-params.paired = true
+params.paired = "true"
 params.cpus = 1
 params.mem = 2  // in GB
 params.publish_dir = ""
@@ -62,7 +62,7 @@ process gatkCollectOxogMetrics {
 
   script:
     arg_interval_file = interval_file.name == 'NO_FILE' ? "" : "-i ${interval_file}"
-    arg_paired = paired ? "-p" : ""
+    arg_paired = paired == "true" ? "-p" : ""
     """
     gatk-collect-oxog-metrics.py -s ${seq} \
                       -r ${ref_genome_fa} \
